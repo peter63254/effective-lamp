@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "flowers")
@@ -34,6 +35,7 @@ public class Flower {
     private String stockStatus = "IN_STOCK"; // IN_STOCK, LOW_STOCK, OUT_OF_STOCK
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"flowers", "hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -80,3 +82,4 @@ public class Flower {
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 }
+

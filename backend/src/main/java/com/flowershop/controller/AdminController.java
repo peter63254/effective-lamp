@@ -42,8 +42,8 @@ public class AdminController {
     }
 
     @PatchMapping("/flowers/{id}/stock")
-    public ApiResponse<Flower> updateStockStatus(@PathVariable Long id, @RequestBody StockRequest request) {
-        return flowerService.updateStockStatus(id, request.getStatus());
+    public ApiResponse<Flower> updateStockStatus(@PathVariable Long id, @RequestParam String status) {
+        return flowerService.updateStockStatus(id, status);
     }
 
     @DeleteMapping("/flowers/{id}")
@@ -76,10 +76,4 @@ public class AdminController {
         return users;
     }
 
-    // Inner class for stock status request
-    static class StockRequest {
-        private String status;
-        public String getStatus() { return status; }
-        public void setStatus(String status) { this.status = status; }
-    }
 }

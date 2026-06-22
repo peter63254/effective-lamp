@@ -21,7 +21,7 @@ export function updateFlower(id: number, data: any) {
 }
 
 export function updateStockStatus(id: number, status: string) {
-  return api.patch<ApiResponse<Flower>>(`/admin/flowers/${id}/stock`, { status })
+  return api.patch<ApiResponse<Flower>>(`/admin/flowers/${id}/stock`, null, { params: { status } })
 }
 
 export function deleteFlower(id: number) {

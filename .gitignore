@@ -35,3 +35,7 @@ Desktop.ini
 # H2 database files
 *.mv.db
 *.trace.db
+
+# Log files
+*.log
+*.err
