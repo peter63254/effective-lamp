@@ -8,34 +8,34 @@
   >
     <el-menu-item index="/">
       <el-icon><Flower /></el-icon>
-      <span class="brand">Flower Shop</span>
+      <span class="brand">花语花坊</span>
     </el-menu-item>
 
     <div class="flex-grow" />
 
     <el-menu-item index="/">
       <el-icon><HomeFilled /></el-icon>
-      <span>Home</span>
+      <span>首页</span>
     </el-menu-item>
 
     <el-menu-item index="/#flowers">
       <el-icon><Goods /></el-icon>
-      <span>Flowers</span>
+      <span>花卉</span>
     </el-menu-item>
 
     <template v-if="authStore.isLoggedIn">
       <el-sub-menu index="user" v-if="authStore.isAdmin">
         <template #title>
           <el-icon><Setting /></el-icon>
-          <span>Admin</span>
+          <span>管理后台</span>
         </template>
         <el-menu-item index="/admin/flowers">
           <el-icon><List /></el-icon>
-          <span>Manage Flowers</span>
+          <span>花卉管理</span>
         </el-menu-item>
         <el-menu-item index="/admin/categories">
           <el-icon><Collection /></el-icon>
-          <span>Manage Categories</span>
+          <span>分类管理</span>
         </el-menu-item>
       </el-sub-menu>
 
@@ -46,7 +46,7 @@
         </template>
         <el-menu-item index="logout" @click="handleLogout">
           <el-icon><SwitchButton /></el-icon>
-          <span>Logout</span>
+          <span>退出登录</span>
         </el-menu-item>
       </el-sub-menu>
     </template>
@@ -54,11 +54,11 @@
     <template v-else>
       <el-menu-item index="/login">
         <el-icon><User /></el-icon>
-        <span>Login</span>
+        <span>登录</span>
       </el-menu-item>
       <el-menu-item index="/register">
         <el-icon><UserPlus /></el-icon>
-        <span>Register</span>
+        <span>注册</span>
       </el-menu-item>
     </template>
   </el-menu>

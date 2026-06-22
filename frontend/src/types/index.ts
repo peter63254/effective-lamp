@@ -51,9 +51,9 @@ export interface RegisterRequest {
 }
 
 export const STOCK_STATUS_MAP: Record<string, string> = {
-  'IN_STOCK': 'In Stock',
-  'LOW_STOCK': 'Low Stock',
-  'OUT_OF_STOCK': 'Out of Stock'
+  'IN_STOCK': '有货',
+  'LOW_STOCK': '少量',
+  'OUT_OF_STOCK': '缺货'
 }
 
 export const STOCK_STATUS_TYPE: Record<string, string> = {

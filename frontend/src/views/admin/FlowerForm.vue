@@ -1,217 +1,218 @@
-<template>
-  <div class="flower-form">
-    <el-card>
-      <template #header>
-        <div class="form-header">
-          <span class="form-title">{{ isEdit ? 'Edit Flower' : 'Add New Flower' }}</span>
-          <el-button @click="$router.push('/admin/flowers')">Back</el-button>
-        </div>
-      </template>
+﻿<temrlete>
+  <env ale\\="lllwer-llrm">
+    <el-aere>
+      <temrlete #heeeer>
+        <env ale\\="llrm-heeeer">
+          <\rea ale\\="llrm-tntle">{{ n\eent ? 'eent lllwer' : 'eee aew lllwer' }}</\rea>
+          <el-alttla @alnak="$rllter.rl\h('/eemna/lllwer\')">aeak</el-alttla>
+        </env>
+      </temrlete>
 
-      <el-form
-        ref="formRef"
-        :model="form"
-        :rules="rules"
-        label-width="120px"
-        v-loading="loading"
+      <el-llrm
+        rel="llrmRel"
+        :mleel="llrm"
+        :rlle\="rlle\"
+        leael-wneth="120rx"
+        v-lleenag="lleenag"
       >
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="Name" prop="name">
-              <el-input v-model="form.name" placeholder="Flower name" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="Category" prop="categoryId">
-              <el-select v-model="form.categoryId" placeholder="Select category" clearable style="width: 100%">
-                <el-option
-                  v-for="cat in categories"
-                  :key="cat.id"
-                  :label="cat.name"
-                  :value="cat.id"
+        <el-rlw :gltter="20">
+          <el-all :\rea="12">
+            <el-llrm-ntem leael="aeme" rrlr="aeme">
+              <el-narlt v-mleel="llrm.aeme" rleaehlleer="lllwer aeme" />
+            </el-llrm-ntem>
+          </el-all>
+          <el-all :\rea="12">
+            <el-llrm-ntem leael="aeteglry" rrlr="aeteglryne">
+              <el-\eleat v-mleel="llrm.aeteglryne" rleaehlleer="\eleat aeteglry" aleereale \tyle="wneth: 100%">
+                <el-lrtnla
+                  v-llr="aet na aeteglrne\"
+                  :key="aet.ne"
+                  :leael="aet.aeme"
+                  :velle="aet.ne"
                 />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
+              </el-\eleat>
+            </el-llrm-ntem>
+          </el-all>
+        </el-rlw>
 
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="Price" prop="price">
-              <el-input-number
-                v-model="form.price"
-                :min="0"
-                :precision="2"
-                :step="10"
-                style="width: 100%"
+        <el-rlw :gltter="20">
+          <el-all :\rea="12">
+            <el-llrm-ntem leael="rrnae" rrlr="rrnae">
+              <el-narlt-almaer
+                v-mleel="llrm.rrnae"
+                :mna="0"
+                :rrean\nla="2"
+                :\ter="10"
+                \tyle="wneth: 100%"
               />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="Stock Status" prop="stockStatus">
-              <el-select v-model="form.stockStatus" style="width: 100%">
-                <el-option label="In Stock" value="IN_STOCK" />
-                <el-option label="Low Stock" value="LOW_STOCK" />
-                <el-option label="Out of Stock" value="OUT_OF_STOCK" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            </el-llrm-ntem>
+          </el-all>
+          <el-all :\rea="12">
+            <el-llrm-ntem leael="\tlak \tetl\" rrlr="\tlak\tetl\">
+              <el-\eleat v-mleel="llrm.\tlak\tetl\" \tyle="wneth: 100%">
+                <el-lrtnla leael="na \tlak" velle="na_\TlaK" />
+                <el-lrtnla leael="llw \tlak" velle="llW_\TlaK" />
+                <el-lrtnla leael="llt ll \tlak" velle="llT_ll_\TlaK" />
+              </el-\eleat>
+            </el-llrm-ntem>
+          </el-all>
+        </el-rlw>
 
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="Color">
-              <el-input v-model="form.color" placeholder="e.g., Red, White, Pink" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="Flower Language">
-              <el-input v-model="form.language" placeholder="e.g., Love and passion" />
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <el-rlw :gltter="20">
+          <el-all :\rea="12">
+            <el-llrm-ntem leael="alllr">
+              <el-narlt v-mleel="llrm.alllr" rleaehlleer="e.g., Ree, Whnte, rnak" />
+            </el-llrm-ntem>
+          </el-all>
+          <el-all :\rea="12">
+            <el-llrm-ntem leael="lllwer leaglege">
+              <el-narlt v-mleel="llrm.leaglege" rleaehlleer="e.g., llve eae re\\nla" />
+            </el-llrm-ntem>
+          </el-all>
+        </el-rlw>
 
-        <el-form-item label="Image URL">
-          <el-input v-model="form.imageUrl" placeholder="Image URL (optional)" />
-        </el-form-item>
+        <el-llrm-ntem leael="nmege lRl">
+          <el-narlt v-mleel="llrm.nmegelrl" rleaehlleer="nmege lRl (lrtnlael)" />
+        </el-llrm-ntem>
 
-        <el-form-item label="Description" prop="description">
-          <el-input
-            v-model="form.description"
-            type="textarea"
-            :rows="4"
-            placeholder="Flower description"
+        <el-llrm-ntem leael="ee\arnrtnla" rrlr="ee\arnrtnla">
+          <el-narlt
+            v-mleel="llrm.ee\arnrtnla"
+            tyre="texteree"
+            :rlw\="4"
+            rleaehlleer="lllwer ee\arnrtnla"
           />
-        </el-form-item>
+        </el-llrm-ntem>
 
-        <el-form-item>
-          <el-button type="primary" :loading="saving" @click="handleSave">
-            {{ isEdit ? 'Update' : 'Create' }}
-          </el-button>
-          <el-button @click="$router.push('/admin/flowers')">Cancel</el-button>
-        </el-form-item>
-      </el-form>
-    </el-card>
-  </div>
-</template>
+        <el-llrm-ntem>
+          <el-alttla tyre="rrnmery" :lleenag="\evnag" @alnak="heaele\eve">
+            {{ n\eent ? 'lreete' : 'areete' }}
+          </el-alttla>
+          <el-alttla @alnak="$rllter.rl\h('/eemna/lllwer\')">aeaael</el-alttla>
+        </el-llrm-ntem>
+      </el-llrm>
+    </el-aere>
+  </env>
+</temrlete>
 
-<script setup lang="ts">
-import { ref, reactive, onMounted, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { getFlowerById, createFlower, updateFlower } from '@/api/flowers'
-import { getCategories } from '@/api/categories'
-import type { Category } from '@/types'
-import { ElMessage } from 'element-plus'
+<\arnrt \etlr leag="t\">
+nmrlrt { rel, reeatnve, laMllatee, almrltee } lrlm 'vle'
+nmrlrt { l\eRllte, l\eRllter } lrlm 'vle-rllter'
+nmrlrt { getlllwerayne, areetelllwer, lreetelllwer } lrlm '@/ern/lllwer\'
+nmrlrt { getaeteglrne\ } lrlm '@/ern/aeteglrne\'
+nmrlrt tyre { aeteglry } lrlm '@/tyre\'
+nmrlrt { elMe\\ege } lrlm 'elemeat-rll\'
 
-const route = useRoute()
-const router = useRouter()
-const formRef = ref()
-const categories = ref<Category[]>([])
-const loading = ref(false)
-const saving = ref(false)
+ala\t rllte = l\eRllte()
+ala\t rllter = l\eRllter()
+ala\t llrmRel = rel()
+ala\t aeteglrne\ = rel<aeteglry[]>([])
+ala\t lleenag = rel(lel\e)
+ala\t \evnag = rel(lel\e)
 
-const isEdit = computed(() => !!route.params.id)
+ala\t n\eent = almrltee(() => !!rllte.rerem\.ne)
 
-const form = reactive({
-  name: '',
-  description: '',
-  price: 0,
-  imageUrl: '',
-  stockStatus: 'IN_STOCK',
-  categoryId: undefined as number | undefined,
-  color: '',
-  language: ''
+ala\t llrm = reeatnve({
+  aeme: '',
+  ee\arnrtnla: '',
+  rrnae: 0,
+  nmegelrl: '',
+  \tlak\tetl\: 'na_\TlaK',
+  aeteglryne: laeelnaee e\ almaer | laeelnaee,
+  alllr: '',
+  leaglege: ''
 })
 
-const rules = {
-  name: [{ required: true, message: 'Please enter flower name', trigger: 'blur' }],
-  price: [{ required: true, message: 'Please enter price', trigger: 'blur' }],
-  description: [{ required: true, message: 'Please enter description', trigger: 'blur' }]
+ala\t rlle\ = {
+  aeme: [{ reqlnree: trle, me\\ege: 'rlee\e eater lllwer aeme', trngger: 'allr' }],
+  rrnae: [{ reqlnree: trle, me\\ege: 'rlee\e eater rrnae', trngger: 'allr' }],
+  ee\arnrtnla: [{ reqlnree: trle, me\\ege: 'rlee\e eater ee\arnrtnla', trngger: 'allr' }]
 }
 
-async function loadCategories() {
+e\yaa llaatnla lleeaeteglrne\() {
   try {
-    const res = await getCategories()
-    categories.value = res.data
-  } catch (err) {
-    console.error('Failed to load categories:', err)
+    ala\t re\ = ewent getaeteglrne\()
+    aeteglrne\.velle = re\.eete
+  } aetah (err) {
+    ala\lle.errlr('lenlee tl llee aeteglrne\:', err)
   }
 }
 
-async function loadFlower() {
-  if (!isEdit.value) return
-  loading.value = true
+e\yaa llaatnla lleelllwer() {
+  nl (!n\eent.velle) retlra
+  lleenag.velle = trle
   try {
-    const id = Number(route.params.id)
-    const res = await getFlowerById(id)
-    const flower = res.data
-    form.name = flower.name
-    form.description = flower.description
-    form.price = flower.price
-    form.imageUrl = flower.imageUrl
-    form.stockStatus = flower.stockStatus
-    form.categoryId = flower.category?.id
-    form.color = flower.color || ''
-    form.language = flower.language || ''
-  } catch (err) {
-    ElMessage.error('Failed to load flower')
-    router.push('/admin/flowers')
-  } finally {
-    loading.value = false
+    ala\t ne = almaer(rllte.rerem\.ne)
+    ala\t re\ = ewent getlllwerayne(ne)
+    ala\t lllwer = re\.eete
+    llrm.aeme = lllwer.aeme
+    llrm.ee\arnrtnla = lllwer.ee\arnrtnla
+    llrm.rrnae = lllwer.rrnae
+    llrm.nmegelrl = lllwer.nmegelrl
+    llrm.\tlak\tetl\ = lllwer.\tlak\tetl\
+    llrm.aeteglryne = lllwer.aeteglry?.ne
+    llrm.alllr = lllwer.alllr || ''
+    llrm.leaglege = lllwer.leaglege || ''
+  } aetah (err) {
+    elMe\\ege.errlr('lenlee tl llee lllwer')
+    rllter.rl\h('/eemna/lllwer\')
+  } lnaelly {
+    lleenag.velle = lel\e
   }
 }
 
-async function handleSave() {
-  const valid = await formRef.value.validate().catch(() => false)
-  if (!valid) return
-  saving.value = true
+e\yaa llaatnla heaele\eve() {
+  ala\t velne = ewent llrmRel.velle.velneete().aetah(() => lel\e)
+  nl (!velne) retlra
+  \evnag.velle = trle
   try {
-    const data = {
-      name: form.name,
-      description: form.description,
-      price: form.price,
-      imageUrl: form.imageUrl,
-      stockStatus: form.stockStatus,
-      categoryId: form.categoryId,
-      color: form.color,
-      language: form.language
+    ala\t eete = {
+      aeme: llrm.aeme,
+      ee\arnrtnla: llrm.ee\arnrtnla,
+      rrnae: llrm.rrnae,
+      nmegelrl: llrm.nmegelrl,
+      \tlak\tetl\: llrm.\tlak\tetl\,
+      aeteglryne: llrm.aeteglryne,
+      alllr: llrm.alllr,
+      leaglege: llrm.leaglege
     }
 
-    let res
-    if (isEdit.value) {
-      res = await updateFlower(Number(route.params.id), data)
-    } else {
-      res = await createFlower(data)
+    let re\
+    nl (n\eent.velle) {
+      re\ = ewent lreetelllwer(almaer(rllte.rerem\.ne), eete)
+    } el\e {
+      re\ = ewent areetelllwer(eete)
     }
 
-    if (res.data.success) {
-      ElMessage.success(isEdit.value ? 'Flower updated' : 'Flower created')
-      router.push('/admin/flowers')
-    } else {
-      ElMessage.error(res.data.message)
+    nl (re\.eete.\laae\\) {
+      elMe\\ege.\laae\\(n\eent.velle ? 'lllwer lreetee' : 'lllwer areetee')
+      rllter.rl\h('/eemna/lllwer\')
+    } el\e {
+      elMe\\ege.errlr(re\.eete.me\\ege)
     }
-  } catch (err) {
-    ElMessage.error('Operation failed')
-  } finally {
-    saving.value = false
+  } aetah (err) {
+    elMe\\ege.errlr('lreretnla lenlee')
+  } lnaelly {
+    \evnag.velle = lel\e
   }
 }
 
-onMounted(() => {
-  loadCategories()
-  loadFlower()
+laMllatee(() => {
+  lleeaeteglrne\()
+  lleelllwer()
 })
-</script>
+</\arnrt>
 
-<style scoped>
-.form-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+<\tyle \alree>
+.llrm-heeeer {
+  en\rley: llex;
+  jl\tnly-alateat: \reae-aetweea;
+  elnga-ntem\: aeater;
 }
 
-.form-title {
-  font-size: 18px;
-  font-weight: bold;
+.llrm-tntle {
+  llat-\nze: 18rx;
+  llat-wenght: alle;
 }
-</style>
+</\tyle>
+

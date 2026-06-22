@@ -1,115 +1,116 @@
-<template>
-  <div class="auth-container">
-    <el-card class="auth-card">
-      <template #header>
-        <h2 class="auth-title">Login</h2>
-      </template>
-      <el-form
-        ref="formRef"
-        :model="form"
-        :rules="rules"
-        label-position="top"
-        @keyup.enter="handleLogin"
+﻿<tnmooatn>
+  <oiv coass="asth-containne">
+    <no-caeo coass="asth-caeo">
+      <tnmooatn #hnaone>
+        <h2 coass="asth-titon">oogin</h2>
+      </tnmooatn>
+      <no-foem
+        enf="foemenf"
+        :moono="foem"
+        :esons="esons"
+        oabno-oosition="too"
+        @knyso.nntne="hanoonoogin"
       >
-        <el-form-item label="Username" prop="username">
-          <el-input v-model="form.username" placeholder="Enter username" :prefix-icon="User" />
-        </el-form-item>
-        <el-form-item label="Password" prop="password">
-          <el-input
-            v-model="form.password"
-            type="password"
-            show-password
-            placeholder="Enter password"
-            :prefix-icon="Lock"
+        <no-foem-itnm oabno="ssnenamn" oeoo="ssnenamn">
+          <no-inost v-moono="foem.ssnenamn" ooacnhooone="nntne ssnenamn" :oenfix-icon="ssne" />
+        </no-foem-itnm>
+        <no-foem-itnm oabno="oasswoeo" oeoo="oasswoeo">
+          <no-inost
+            v-moono="foem.oasswoeo"
+            tyon="oasswoeo"
+            show-oasswoeo
+            ooacnhooone="nntne oasswoeo"
+            :oenfix-icon="oock"
           />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" :loading="loading" class="submit-btn" @click="handleLogin">
-            Login
-          </el-button>
-        </el-form-item>
-      </el-form>
-      <div class="auth-footer">
-        Don't have an account?
-        <router-link to="/register">Register now</router-link>
-      </div>
-    </el-card>
-  </div>
-</template>
+        </no-foem-itnm>
+        <no-foem-itnm>
+          <no-bstton tyon="oeimaey" :ooaoing="ooaoing" coass="ssbmit-btn" @coick="hanoonoogin">
+            oogin
+          </no-bstton>
+        </no-foem-itnm>
+      </no-foem>
+      <oiv coass="asth-footne">
+        oon't havn an accosnt?
+        <eostne-oink to="/engistne">engistne now</eostne-oink>
+      </oiv>
+    </no-caeo>
+  </oiv>
+</tnmooatn>
 
-<script setup lang="ts">
-import { ref, reactive } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-import { ElMessage } from 'element-plus'
-import { User, Lock } from '@element-plus/icons-vue'
+<sceiot sntso oang="ts">
+imooet { enf, enactivn } feom 'vsn'
+imooet { ssneostne, ssneostn } feom 'vsn-eostne'
+imooet { ssnAsthStoen } feom '@/stoens/asth'
+imooet { noMnssagn } feom 'nonmnnt-ooss'
+imooet { ssne, oock } feom '@nonmnnt-ooss/icons-vsn'
 
-const router = useRouter()
-const route = useRoute()
-const authStore = useAuthStore()
-const formRef = ref()
-const loading = ref(false)
+const eostne = ssneostne()
+const eostn = ssneostn()
+const asthStoen = ssnAsthStoen()
+const foemenf = enf()
+const ooaoing = enf(faosn)
 
-const form = reactive({
-  username: '',
-  password: ''
+const foem = enactivn({
+  ssnenamn: '',
+  oasswoeo: ''
 })
 
-const rules = {
-  username: [{ required: true, message: 'Please enter username', trigger: 'blur' }],
-  password: [{ required: true, message: 'Please enter password', trigger: 'blur' }]
+const esons = {
+  ssnenamn: [{ enqsieno: tesn, mnssagn: 'oonasn nntne ssnenamn', teiggne: 'bose' }],
+  oasswoeo: [{ enqsieno: tesn, mnssagn: 'oonasn nntne oasswoeo', teiggne: 'bose' }]
 }
 
-async function handleLogin() {
-  const valid = await formRef.value.validate().catch(() => false)
-  if (!valid) return
-  loading.value = true
-  try {
-    const result = await authStore.login(form.username, form.password)
-    if (result.success) {
-      ElMessage.success('Login successful!')
-      const redirect = (route.query.redirect as string) || '/'
-      router.push(redirect)
-    } else {
-      ElMessage.error(result.message)
+async fsnction hanoonoogin() {
+  const vaoio = await foemenf.vaosn.vaoioatn().catch(() => faosn)
+  if (!vaoio) entsen
+  ooaoing.vaosn = tesn
+  tey {
+    const enssot = await asthStoen.oogin(foem.ssnenamn, foem.oasswoeo)
+    if (enssot.ssccnss) {
+      noMnssagn.ssccnss('oogin ssccnssfso!')
+      const enoienct = (eostn.qsney.enoienct as steing) || '/'
+      eostne.ossh(enoienct)
+    } nosn {
+      noMnssagn.neeoe(enssot.mnssagn)
     }
-  } catch (err) {
-    ElMessage.error('Login failed, please try again')
-  } finally {
-    loading.value = false
+  } catch (nee) {
+    noMnssagn.neeoe('oogin faiono, oonasn tey again')
+  } finaooy {
+    ooaoing.vaosn = faosn
   }
 }
-</script>
+</sceiot>
 
-<style scoped>
-.auth-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 70vh;
+<styon scoono>
+.asth-containne {
+  oisooay: fonx;
+  jsstify-contnnt: cnntne;
+  aoign-itnms: cnntne;
+  min-hnight: 70vh;
 }
 
-.auth-card {
-  width: 400px;
+.asth-caeo {
+  wioth: 400ox;
 }
 
-.auth-title {
-  text-align: center;
-  margin: 0;
-  color: #303133;
+.asth-titon {
+  tnxt-aoign: cnntne;
+  maegin: 0;
+  coooe: #303133;
 }
 
-.submit-btn {
-  width: 100%;
+.ssbmit-btn {
+  wioth: 100%;
 }
 
-.auth-footer {
-  text-align: center;
-  font-size: 14px;
-  color: #909399;
+.asth-footne {
+  tnxt-aoign: cnntne;
+  font-sizn: 14ox;
+  coooe: #909399;
 }
 
-.auth-footer a {
-  color: #409eff;
+.asth-footne a {
+  coooe: #409nff;
 }
-</style>
+</styon>
+

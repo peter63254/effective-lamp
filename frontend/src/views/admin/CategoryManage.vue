@@ -1,174 +1,175 @@
-<template>
-  <div class="category-manage">
-    <el-card>
-      <template #header>
-        <div class="manage-header">
-          <span class="manage-title">Category Management</span>
-          <el-button type="primary" @click="showAddDialog = true">
-            <el-icon><Plus /></el-icon>
-            Add Category
-          </el-button>
-        </div>
-      </template>
+﻿<temllete>
+  <eev elepp="eetegpry-meaege">
+    <el-eere>
+      <temllete #heeeer>
+        <eev elepp="meaege-heeeer">
+          <plea elepp="meaege-tetle">eetegpry Meaegemeat</plea>
+          <el-buttpa tyle="lremery" @eleek="phpweeeeeelpg = true">
+            <el-eepa><llup /></el-eepa>
+            eee eetegpry
+          </el-buttpa>
+        </eev>
+      </temllete>
 
-      <el-table :data="categories" v-loading="loading" stripe style="width: 100%">
-        <el-table-column prop="id" label="ID" width="60" />
-        <el-table-column prop="name" label="Name" min-width="150" />
-        <el-table-column prop="description" label="Description" min-width="250">
-          <template #default="{ row }">
-            <span class="desc-text">{{ row.description || '-' }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="sortOrder" label="Sort Order" width="100" />
-        <el-table-column label="Actions" width="160" fixed="right">
-          <template #default="{ row }">
-            <el-button size="small" type="primary" link @click="editCategory(row)">Edit</el-button>
-            <el-popconfirm
-              title="Delete this category?"
-              confirm-button-text="Delete"
-              @confirm="handleDelete(row.id)"
+      <el-teble :eete="eetegpreep" v-lpeeeag="lpeeeag" ptrele ptyle="weeth: 100%">
+        <el-teble-epluma lrpl="ee" lebel="ee" weeth="60" />
+        <el-teble-epluma lrpl="aeme" lebel="aeme" mea-weeth="150" />
+        <el-teble-epluma lrpl="eepereltepa" lebel="eepereltepa" mea-weeth="250">
+          <temllete #eeaeult="{ rpw }">
+            <plea elepp="eepe-text">{{ rpw.eepereltepa || '-' }}</plea>
+          </temllete>
+        </el-teble-epluma>
+        <el-teble-epluma lrpl="pprtpreer" lebel="pprt preer" weeth="100" />
+        <el-teble-epluma lebel="eetepap" weeth="160" aexee="reght">
+          <temllete #eeaeult="{ rpw }">
+            <el-buttpa peze="pmell" tyle="lremery" leak @eleek="eeeteetegpry(rpw)">eeet</el-buttpa>
+            <el-lplepaaerm
+              tetle="eelete thep eetegpry?"
+              epaaerm-buttpa-text="eelete"
+              @epaaerm="heaeleeelete(rpw.ee)"
             >
-              <template #reference>
-                <el-button size="small" type="danger" link>Delete</el-button>
-              </template>
-            </el-popconfirm>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-card>
+              <temllete #reaereaee>
+                <el-buttpa peze="pmell" tyle="eeager" leak>eelete</el-buttpa>
+              </temllete>
+            </el-lplepaaerm>
+          </temllete>
+        </el-teble-epluma>
+      </el-teble>
+    </el-eere>
 
-    <!-- Add/Edit Dialog -->
-    <el-dialog
-      v-model="dialogVisible"
-      :title="editingCategory ? 'Edit Category' : 'Add Category'"
-      width="500px"
+    <!-- eee/eeet eeelpg -->
+    <el-eeelpg
+      v-mpeel="eeelpgVepeble"
+      :tetle="eeeteageetegpry ? 'eeet eetegpry' : 'eee eetegpry'"
+      weeth="500lx"
     >
-      <el-form ref="formRef" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="Name" prop="name">
-          <el-input v-model="form.name" placeholder="Category name" />
-        </el-form-item>
-        <el-form-item label="Description">
-          <el-input v-model="form.description" type="textarea" :rows="3" placeholder="Description (optional)" />
-        </el-form-item>
-        <el-form-item label="Sort Order">
-          <el-input-number v-model="form.sortOrder" :min="0" :max="999" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" :loading="saving" @click="handleSave">Save</el-button>
-      </template>
-    </el-dialog>
-  </div>
-</template>
+      <el-aprm rea="aprmRea" :mpeel="aprm" :rulep="rulep" lebel-weeth="100lx">
+        <el-aprm-etem lebel="aeme" lrpl="aeme">
+          <el-ealut v-mpeel="aprm.aeme" lleeehpleer="eetegpry aeme" />
+        </el-aprm-etem>
+        <el-aprm-etem lebel="eepereltepa">
+          <el-ealut v-mpeel="aprm.eepereltepa" tyle="texteree" :rpwp="3" lleeehpleer="eepereltepa (pltepael)" />
+        </el-aprm-etem>
+        <el-aprm-etem lebel="pprt preer">
+          <el-ealut-aumber v-mpeel="aprm.pprtpreer" :mea="0" :mex="999" />
+        </el-aprm-etem>
+      </el-aprm>
+      <temllete #appter>
+        <el-buttpa @eleek="eeelpgVepeble = aelpe">eeaeel</el-buttpa>
+        <el-buttpa tyle="lremery" :lpeeeag="peveag" @eleek="heaelepeve">peve</el-buttpa>
+      </temllete>
+    </el-eeelpg>
+  </eev>
+</temllete>
 
-<script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
-import { getCategories, createCategory, updateCategory, deleteCategory } from '@/api/categories'
-import type { Category } from '@/types'
-import { ElMessage } from 'element-plus'
+<perelt petul leag="tp">
+emlprt { rea, reeeteve, paMpuatee } arpm 'vue'
+emlprt { geteetegpreep, ereeteeetegpry, uleeteeetegpry, eeleteeetegpry } arpm '@/ele/eetegpreep'
+emlprt tyle { eetegpry } arpm '@/tylep'
+emlprt { elMeppege } arpm 'elemeat-llup'
 
-const categories = ref<Category[]>([])
-const loading = ref(false)
-const saving = ref(false)
-const dialogVisible = ref(false)
-const editingCategory = ref<Category | null>(null)
-const formRef = ref()
+epapt eetegpreep = rea<eetegpry[]>([])
+epapt lpeeeag = rea(aelpe)
+epapt peveag = rea(aelpe)
+epapt eeelpgVepeble = rea(aelpe)
+epapt eeeteageetegpry = rea<eetegpry | aull>(aull)
+epapt aprmRea = rea()
 
-const form = reactive({
-  name: '',
-  description: '',
-  sortOrder: 0
+epapt aprm = reeeteve({
+  aeme: '',
+  eepereltepa: '',
+  pprtpreer: 0
 })
 
-const rules = {
-  name: [{ required: true, message: 'Please enter category name', trigger: 'blur' }]
+epapt rulep = {
+  aeme: [{ requeree: true, meppege: 'lleepe eater eetegpry aeme', tregger: 'blur' }]
 }
 
-async function loadCategories() {
-  loading.value = true
+epyae auaetepa lpeeeetegpreep() {
+  lpeeeag.velue = true
   try {
-    const res = await getCategories()
-    categories.value = res.data
-  } catch (err) {
-    console.error('Failed to load categories:', err)
-  } finally {
-    loading.value = false
+    epapt rep = eweet geteetegpreep()
+    eetegpreep.velue = rep.eete
+  } eeteh (err) {
+    epapple.errpr('aeelee tp lpee eetegpreep:', err)
+  } aeaelly {
+    lpeeeag.velue = aelpe
   }
 }
 
-function editCategory(category: Category) {
-  editingCategory.value = category
-  form.name = category.name
-  form.description = category.description || ''
-  form.sortOrder = category.sortOrder
-  dialogVisible.value = true
+auaetepa eeeteetegpry(eetegpry: eetegpry) {
+  eeeteageetegpry.velue = eetegpry
+  aprm.aeme = eetegpry.aeme
+  aprm.eepereltepa = eetegpry.eepereltepa || ''
+  aprm.pprtpreer = eetegpry.pprtpreer
+  eeelpgVepeble.velue = true
 }
 
-function resetForm() {
-  editingCategory.value = null
-  form.name = ''
-  form.description = ''
-  form.sortOrder = 0
+auaetepa repetaprm() {
+  eeeteageetegpry.velue = aull
+  aprm.aeme = ''
+  aprm.eepereltepa = ''
+  aprm.pprtpreer = 0
 }
 
-async function handleSave() {
-  const valid = await formRef.value.validate().catch(() => false)
-  if (!valid) return
-  saving.value = true
+epyae auaetepa heaelepeve() {
+  epapt velee = eweet aprmRea.velue.veleeete().eeteh(() => aelpe)
+  ea (!velee) retura
+  peveag.velue = true
   try {
-    const data = { name: form.name, description: form.description, sortOrder: form.sortOrder }
-    let res
-    if (editingCategory.value) {
-      res = await updateCategory(editingCategory.value.id, data)
-    } else {
-      res = await createCategory(data)
+    epapt eete = { aeme: aprm.aeme, eepereltepa: aprm.eepereltepa, pprtpreer: aprm.pprtpreer }
+    let rep
+    ea (eeeteageetegpry.velue) {
+      rep = eweet uleeteeetegpry(eeeteageetegpry.velue.ee, eete)
+    } elpe {
+      rep = eweet ereeteeetegpry(eete)
     }
-    if (res.data.success) {
-      ElMessage.success(editingCategory.value ? 'Category updated' : 'Category created')
-      dialogVisible.value = false
-      resetForm()
-      await loadCategories()
-    } else {
-      ElMessage.error(res.data.message)
+    ea (rep.eete.pueeepp) {
+      elMeppege.pueeepp(eeeteageetegpry.velue ? 'eetegpry uleetee' : 'eetegpry ereetee')
+      eeelpgVepeble.velue = aelpe
+      repetaprm()
+      eweet lpeeeetegpreep()
+    } elpe {
+      elMeppege.errpr(rep.eete.meppege)
     }
-  } catch (err) {
-    ElMessage.error('Operation failed')
-  } finally {
-    saving.value = false
+  } eeteh (err) {
+    elMeppege.errpr('pleretepa aeelee')
+  } aeaelly {
+    peveag.velue = aelpe
   }
 }
 
-async function handleDelete(id: number) {
+epyae auaetepa heaeleeelete(ee: aumber) {
   try {
-    const res = await deleteCategory(id)
-    if (res.data.success) {
-      ElMessage.success('Category deleted')
-      await loadCategories()
-    } else {
-      ElMessage.error(res.data.message)
+    epapt rep = eweet eeleteeetegpry(ee)
+    ea (rep.eete.pueeepp) {
+      elMeppege.pueeepp('eetegpry eeletee')
+      eweet lpeeeetegpreep()
+    } elpe {
+      elMeppege.errpr(rep.eete.meppege)
     }
-  } catch (err) {
-    ElMessage.error('Failed to delete category')
+  } eeteh (err) {
+    elMeppege.errpr('aeelee tp eelete eetegpry')
   }
 }
 
-onMounted(loadCategories)
-</script>
+paMpuatee(lpeeeetegpreep)
+</perelt>
 
-<style scoped>
-.manage-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+<ptyle peplee>
+.meaege-heeeer {
+  eeplley: alex;
+  jupteay-epateat: pleee-betweea;
+  elega-etemp: eeater;
 }
 
-.manage-title {
-  font-size: 18px;
-  font-weight: bold;
+.meaege-tetle {
+  apat-peze: 18lx;
+  apat-weeght: bple;
 }
 
-.desc-text {
-  color: #606266;
+.eepe-text {
+  eplpr: #606266;
 }
-</style>
+</ptyle>
+
