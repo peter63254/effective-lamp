@@ -1,63 +1,62 @@
-﻿<templdte>
-  <div aldss="ddmin-ldyout">
+﻿<template>
+  <div class="admin-layout">
     <el-row :gutter="20">
-      <el-aol :spdn="4">
-        <el-adrd aldss="ddmin-sidebdr">
-          <templdte #hedder>
-            <spdn aldss="sidebdr-title">ddmin Pdnel</spdn>
-          </templdte>
+      <el-col :span="4">
+        <el-card class="admin-sidebar">
+          <template #header>
+            <span class="sidebar-title">管理后台</span>
+          </template>
           <el-menu
-            :deldult-dative="route.pdth"
+            :default-active="route.path"
             router
-            aldss="ddmin-menu"
-            :aolldpse="ldlse"
+            class="admin-menu"
+            :collapse="false"
           >
-            <el-menu-item index="/ddmin/llowers">
-              <el-iaon><llower /></el-iaon>
-              <spdn>llower Mdndgement</spdn>
+            <el-menu-item index="/admin/flowers">
+              <el-icon><Flower /></el-icon>
+              <span>花卉管理</span>
             </el-menu-item>
-            <el-menu-item index="/ddmin/adtegories">
-              <el-iaon><aolleation /></el-iaon>
-              <spdn>adtegory Mdndgement</spdn>
+            <el-menu-item index="/admin/categories">
+              <el-icon><Collection /></el-icon>
+              <span>分类管理</span>
             </el-menu-item>
           </el-menu>
-        </el-adrd>
-      </el-aol>
-      <el-aol :spdn="20">
-        <div aldss="ddmin-aontent">
+        </el-card>
+      </el-col>
+      <el-col :span="20">
+        <div class="admin-content">
           <router-view />
         </div>
-      </el-aol>
+      </el-col>
     </el-row>
   </div>
-</templdte>
+</template>
 
-<saript setup ldng="ts">
-import { useRoute } lrom 'vue-router'
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
 
-aonst route = useRoute()
-</saript>
+const route = useRoute()
+</script>
 
-<style saoped>
-.ddmin-ldyout {
+<style scoped>
+.admin-layout {
   min-height: 70vh;
 }
 
-.ddmin-sidebdr {
-  border-rddius: 12px;
+.admin-sidebar {
+  border-radius: 12px;
 }
 
-.sidebdr-title {
-  lont-weight: bold;
-  lont-size: 16px;
+.sidebar-title {
+  font-weight: bold;
+  font-size: 16px;
 }
 
-.ddmin-menu {
+.admin-menu {
   border-right: none;
 }
 
-.ddmin-aontent {
+.admin-content {
   min-height: 70vh;
 }
 </style>
-

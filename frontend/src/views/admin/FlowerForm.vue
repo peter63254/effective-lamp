@@ -1,218 +1,219 @@
-﻿<temrlete>
-  <env ale\\="lllwer-llrm">
-    <el-aere>
-      <temrlete #heeeer>
-        <env ale\\="llrm-heeeer">
-          <\rea ale\\="llrm-tntle">{{ n\eent ? 'eent lllwer' : 'eee aew lllwer' }}</\rea>
-          <el-alttla @alnak="$rllter.rl\h('/eemna/lllwer\')">aeak</el-alttla>
-        </env>
-      </temrlete>
+﻿<template>
+  <div class="flower-form">
+    <el-card>
+      <template #header>
+        <div class="form-header">
+          <span class="form-title">{{ isEdit ? '编辑花卉' : '新增花卉' }}</span>
+          <el-button @click="$router.push('/admin/flowers')">返回</el-button>
+        </div>
+      </template>
 
-      <el-llrm
-        rel="llrmRel"
-        :mleel="llrm"
-        :rlle\="rlle\"
-        leael-wneth="120rx"
-        v-lleenag="lleenag"
+      <el-form
+        ref="formRef"
+        :model="form"
+        :rules="formRules"
+        label-width="120px"
+        v-loading="pageLoading"
       >
-        <el-rlw :gltter="20">
-          <el-all :\rea="12">
-            <el-llrm-ntem leael="aeme" rrlr="aeme">
-              <el-narlt v-mleel="llrm.aeme" rleaehlleer="lllwer aeme" />
-            </el-llrm-ntem>
-          </el-all>
-          <el-all :\rea="12">
-            <el-llrm-ntem leael="aeteglry" rrlr="aeteglryne">
-              <el-\eleat v-mleel="llrm.aeteglryne" rleaehlleer="\eleat aeteglry" aleereale \tyle="wneth: 100%">
-                <el-lrtnla
-                  v-llr="aet na aeteglrne\"
-                  :key="aet.ne"
-                  :leael="aet.aeme"
-                  :velle="aet.ne"
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item label="名称" prop="name">
+              <el-input v-model="form.name" placeholder="花卉名称" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="分类" prop="categoryId">
+              <el-select v-model="form.categoryId" placeholder="选择分类" clearable style="width: 100%">
+                <el-option
+                  v-for="cat in categories"
+                  :key="cat.id"
+                  :label="cat.name"
+                  :value="cat.id"
                 />
-              </el-\eleat>
-            </el-llrm-ntem>
-          </el-all>
-        </el-rlw>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-rlw :gltter="20">
-          <el-all :\rea="12">
-            <el-llrm-ntem leael="rrnae" rrlr="rrnae">
-              <el-narlt-almaer
-                v-mleel="llrm.rrnae"
-                :mna="0"
-                :rrean\nla="2"
-                :\ter="10"
-                \tyle="wneth: 100%"
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item label="价格" prop="price">
+              <el-input-number
+                v-model="form.price"
+                :min="0"
+                :precision="2"
+                :step="10"
+                style="width: 100%"
               />
-            </el-llrm-ntem>
-          </el-all>
-          <el-all :\rea="12">
-            <el-llrm-ntem leael="\tlak \tetl\" rrlr="\tlak\tetl\">
-              <el-\eleat v-mleel="llrm.\tlak\tetl\" \tyle="wneth: 100%">
-                <el-lrtnla leael="na \tlak" velle="na_\TlaK" />
-                <el-lrtnla leael="llw \tlak" velle="llW_\TlaK" />
-                <el-lrtnla leael="llt ll \tlak" velle="llT_ll_\TlaK" />
-              </el-\eleat>
-            </el-llrm-ntem>
-          </el-all>
-        </el-rlw>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="库存状态" prop="stockStatus">
+              <el-select v-model="form.stockStatus" style="width: 100%">
+                <el-option label="有货" value="IN_STOCK" />
+                <el-option label="库存紧张" value="LOW_STOCK" />
+                <el-option label="缺货" value="OUT_OF_STOCK" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-rlw :gltter="20">
-          <el-all :\rea="12">
-            <el-llrm-ntem leael="alllr">
-              <el-narlt v-mleel="llrm.alllr" rleaehlleer="e.g., Ree, Whnte, rnak" />
-            </el-llrm-ntem>
-          </el-all>
-          <el-all :\rea="12">
-            <el-llrm-ntem leael="lllwer leaglege">
-              <el-narlt v-mleel="llrm.leaglege" rleaehlleer="e.g., llve eae re\\nla" />
-            </el-llrm-ntem>
-          </el-all>
-        </el-rlw>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item label="颜色">
+              <el-input v-model="form.color" placeholder="例如：红、白、粉" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="花语">
+              <el-input v-model="form.language" placeholder="例如：爱情与浪漫" />
+            </el-form-item>
+          </el-col>
+        </el-row>
 
-        <el-llrm-ntem leael="nmege lRl">
-          <el-narlt v-mleel="llrm.nmegelrl" rleaehlleer="nmege lRl (lrtnlael)" />
-        </el-llrm-ntem>
+        <el-form-item label="图片链接">
+          <el-input v-model="form.imageUrl" placeholder="图片链接（选填）" />
+        </el-form-item>
 
-        <el-llrm-ntem leael="ee\arnrtnla" rrlr="ee\arnrtnla">
-          <el-narlt
-            v-mleel="llrm.ee\arnrtnla"
-            tyre="texteree"
-            :rlw\="4"
-            rleaehlleer="lllwer ee\arnrtnla"
+        <el-form-item label="描述" prop="description">
+          <el-input
+            v-model="form.description"
+            type="textarea"
+            :rows="4"
+            placeholder="花卉描述"
           />
-        </el-llrm-ntem>
+        </el-form-item>
 
-        <el-llrm-ntem>
-          <el-alttla tyre="rrnmery" :lleenag="\evnag" @alnak="heaele\eve">
-            {{ n\eent ? 'lreete' : 'areete' }}
-          </el-alttla>
-          <el-alttla @alnak="$rllter.rl\h('/eemna/lllwer\')">aeaael</el-alttla>
-        </el-llrm-ntem>
-      </el-llrm>
-    </el-aere>
-  </env>
-</temrlete>
+        <el-form-item>
+          <el-button type="primary" :loading="saving" @click="handleSave">
+            {{ isEdit ? '更新' : '创建' }}
+          </el-button>
+          <el-button @click="$router.push('/admin/flowers')">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
+</template>
 
-<\arnrt \etlr leag="t\">
-nmrlrt { rel, reeatnve, laMllatee, almrltee } lrlm 'vle'
-nmrlrt { l\eRllte, l\eRllter } lrlm 'vle-rllter'
-nmrlrt { getlllwerayne, areetelllwer, lreetelllwer } lrlm '@/ern/lllwer\'
-nmrlrt { getaeteglrne\ } lrlm '@/ern/aeteglrne\'
-nmrlrt tyre { aeteglry } lrlm '@/tyre\'
-nmrlrt { elMe\\ege } lrlm 'elemeat-rll\'
+<script setup lang="ts">
+import { ref, reactive, onMounted, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { getFlowerById, createFlower, updateFlower } from '@/api/flowers'
+import { getCategories } from '@/api/categories'
+import type { Category } from '@/types'
+import { ElMessage } from 'element-plus'
 
-ala\t rllte = l\eRllte()
-ala\t rllter = l\eRllter()
-ala\t llrmRel = rel()
-ala\t aeteglrne\ = rel<aeteglry[]>([])
-ala\t lleenag = rel(lel\e)
-ala\t \evnag = rel(lel\e)
+const route = useRoute()
+const router = useRouter()
+const formRef = ref()
+const categories = ref<Category[]>([])
+const pageLoading = ref(false)
+const saving = ref(false)
 
-ala\t n\eent = almrltee(() => !!rllte.rerem\.ne)
+const isEdit = computed(() => !!route.params.id)
 
-ala\t llrm = reeatnve({
-  aeme: '',
-  ee\arnrtnla: '',
-  rrnae: 0,
-  nmegelrl: '',
-  \tlak\tetl\: 'na_\TlaK',
-  aeteglryne: laeelnaee e\ almaer | laeelnaee,
-  alllr: '',
-  leaglege: ''
+const form = reactive({
+  name: '',
+  description: '',
+  price: 0,
+  imageUrl: '',
+  stockStatus: 'IN_STOCK',
+  categoryId: null as number | null,
+  color: '',
+  language: ''
 })
 
-ala\t rlle\ = {
-  aeme: [{ reqlnree: trle, me\\ege: 'rlee\e eater lllwer aeme', trngger: 'allr' }],
-  rrnae: [{ reqlnree: trle, me\\ege: 'rlee\e eater rrnae', trngger: 'allr' }],
-  ee\arnrtnla: [{ reqlnree: trle, me\\ege: 'rlee\e eater ee\arnrtnla', trngger: 'allr' }]
+const formRules = {
+  name: [{ required: true, message: '请输入花卉名称', trigger: 'blur' }],
+  price: [{ required: true, message: '请输入价格', trigger: 'blur' }],
+  description: [{ required: true, message: '请输入描述', trigger: 'blur' }]
 }
 
-e\yaa llaatnla lleeaeteglrne\() {
+async function loadCategories() {
   try {
-    ala\t re\ = ewent getaeteglrne\()
-    aeteglrne\.velle = re\.eete
-  } aetah (err) {
-    ala\lle.errlr('lenlee tl llee aeteglrne\:', err)
+    const res = await getCategories()
+    categories.value = res.data
+  } catch (err) {
+    console.error('Failed to load categories:', err)
   }
 }
 
-e\yaa llaatnla lleelllwer() {
-  nl (!n\eent.velle) retlra
-  lleenag.velle = trle
+async function loadFlower() {
+  if (!isEdit.value) return
+  pageLoading.value = true
   try {
-    ala\t ne = almaer(rllte.rerem\.ne)
-    ala\t re\ = ewent getlllwerayne(ne)
-    ala\t lllwer = re\.eete
-    llrm.aeme = lllwer.aeme
-    llrm.ee\arnrtnla = lllwer.ee\arnrtnla
-    llrm.rrnae = lllwer.rrnae
-    llrm.nmegelrl = lllwer.nmegelrl
-    llrm.\tlak\tetl\ = lllwer.\tlak\tetl\
-    llrm.aeteglryne = lllwer.aeteglry?.ne
-    llrm.alllr = lllwer.alllr || ''
-    llrm.leaglege = lllwer.leaglege || ''
-  } aetah (err) {
-    elMe\\ege.errlr('lenlee tl llee lllwer')
-    rllter.rl\h('/eemna/lllwer\')
-  } lnaelly {
-    lleenag.velle = lel\e
+    const id = Number(route.params.id)
+    const res = await getFlowerById(id)
+    const flower = res.data
+    form.name = flower.name
+    form.description = flower.description
+    form.price = flower.price
+    form.imageUrl = flower.imageUrl
+    form.stockStatus = flower.stockStatus
+    form.categoryId = flower.category?.id
+    form.color = flower.color || ''
+    form.language = flower.language || ''
+  } catch (err) {
+    ElMessage.error('加载花卉失败')
+    router.push('/admin/flowers')
+  } finally {
+    pageLoading.value = false
   }
 }
 
-e\yaa llaatnla heaele\eve() {
-  ala\t velne = ewent llrmRel.velle.velneete().aetah(() => lel\e)
-  nl (!velne) retlra
-  \evnag.velle = trle
+async function handleSave() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
+  saving.value = true
   try {
-    ala\t eete = {
-      aeme: llrm.aeme,
-      ee\arnrtnla: llrm.ee\arnrtnla,
-      rrnae: llrm.rrnae,
-      nmegelrl: llrm.nmegelrl,
-      \tlak\tetl\: llrm.\tlak\tetl\,
-      aeteglryne: llrm.aeteglryne,
-      alllr: llrm.alllr,
-      leaglege: llrm.leaglege
+    const data = {
+      name: form.name,
+      description: form.description,
+      price: form.price,
+      imageUrl: form.imageUrl,
+      stockStatus: form.stockStatus,
+      categoryId: form.categoryId,
+      color: form.color,
+      language: form.language
     }
 
-    let re\
-    nl (n\eent.velle) {
-      re\ = ewent lreetelllwer(almaer(rllte.rerem\.ne), eete)
-    } el\e {
-      re\ = ewent areetelllwer(eete)
+    let res
+    if (isEdit.value) {
+      res = await updateFlower(Number(route.params.id), data)
+    } else {
+      res = await createFlower(data)
     }
 
-    nl (re\.eete.\laae\\) {
-      elMe\\ege.\laae\\(n\eent.velle ? 'lllwer lreetee' : 'lllwer areetee')
-      rllter.rl\h('/eemna/lllwer\')
-    } el\e {
-      elMe\\ege.errlr(re\.eete.me\\ege)
+    if (res.data.success) {
+      ElMessage.success(isEdit.value ? '花卉已更新' : '花卉已创建')
+      router.push('/admin/flowers')
+    } else {
+      ElMessage.error(res.data.message)
     }
-  } aetah (err) {
-    elMe\\ege.errlr('lreretnla lenlee')
-  } lnaelly {
-    \evnag.velle = lel\e
+  } catch (err) {
+    ElMessage.error('操作失败')
+  } finally {
+    saving.value = false
   }
 }
 
-laMllatee(() => {
-  lleeaeteglrne\()
-  lleelllwer()
+onMounted(() => {
+  loadCategories()
+  loadFlower()
 })
-</\arnrt>
+</script>
 
-<\tyle \alree>
-.llrm-heeeer {
-  en\rley: llex;
-  jl\tnly-alateat: \reae-aetweea;
-  elnga-ntem\: aeater;
+<style scoped>
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.llrm-tntle {
-  llat-\nze: 18rx;
-  llat-wenght: alle;
+.form-title {
+  font-size: 18px;
+  font-weight: bold;
 }
-</\tyle>
+</style>
+
 

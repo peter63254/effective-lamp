@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdf2f8"/>
+      <stop offset="30%" stop-color="#fce7f3"/>
+      <stop offset="60%" stop-color="#ede9fe"/>
+      <stop offset="100%" stop-color="#e0e7ff"/>
+    </linearGradient>
+    <linearGradient id="rose1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fb7185"/>
+      <stop offset="100%" stop-color="#e11d48"/>
+    </linearGradient>
+    <linearGradient id="rose2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f472b6"/>
+      <stop offset="100%" stop-color="#db2777"/>
+    </linearGradient>
+    <linearGradient id="lavender" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <radialGradient id="sunflower" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#facc15"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </radialGradient>
+    <linearGradient id="petalPink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbcfe8"/>
+      <stop offset="100%" stop-color="#f472b6"/>
+    </linearGradient>
+    <linearGradient id="petalPurple" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ddd6fe"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1440" height="600" fill="url(#bg)"/>
+  <!-- Decorative circles -->
+  <circle cx="200" cy="100" r="180" fill="#fce7f3" opacity="0.4"/>
+  <circle cx="1200" cy="450" r="200" fill="#ede9fe" opacity="0.4"/>
+  <circle cx="720" cy="300" r="250" fill="#fdf2f8" opacity="0.3"/>
+  <!-- ====== Large Rose Left ====== -->
+  <g transform="translate(180, 320)">
+    <path d="M40,60 Q30,120 35,200 Q38,250 30,300" stroke="#22c55e" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M35,160 Q0,140 -10,170 Q0,150 35,160Z" fill="#4ade80" opacity="0.8"/>
+    <path d="M35,200 Q70,180 80,210 Q70,190 35,200Z" fill="#4ade80" opacity="0.8"/>
+    <ellipse cx="20" cy="20" rx="25" ry="30" fill="url(#rose1)" opacity="0.85" transform="rotate(-30,20,20)"/>
+    <ellipse cx="60" cy="20" rx="25" ry="30" fill="url(#rose1)" opacity="0.85" transform="rotate(30,60,20)"/>
+    <ellipse cx="40" cy="-10" rx="25" ry="30" fill="url(#rose2)" opacity="0.85" transform="rotate(0,40,-10)"/>
+    <ellipse cx="20" cy="40" rx="20" ry="25" fill="url(#rose2)" opacity="0.7" transform="rotate(-20,20,40)"/>
+    <ellipse cx="60" cy="40" rx="20" ry="25" fill="url(#rose2)" opacity="0.7" transform="rotate(20,60,40)"/>
+    <circle cx="40" cy="25" r="10" fill="#be123c" opacity="0.9"/>
+    <circle cx="40" cy="25" r="6" fill="#e11d48"/>
+  </g>
+  <!-- ====== Sunflower Right ====== -->
+  <g transform="translate(1220, 260)">
+    <path d="M0,30 Q-5,100 5,180 Q8,230 0,280" stroke="#22c55e" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M3,130 Q40,110 50,140 Q40,120 3,130Z" fill="#4ade80" opacity="0.8"/>
+    <path d="M3,180 Q-35,160 -45,190 Q-35,170 3,180Z" fill="#4ade80" opacity="0.8"/>
+    <g fill="url(#sunflower)">
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(0,0,0)"/>
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(30,0,0)"/>
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(60,0,0)"/>
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(90,0,0)"/>
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(120,0,0)"/>
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(150,0,0)"/>
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(180,0,0)"/>
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(210,0,0)"/>
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(240,0,0)"/>
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(270,0,0)"/>
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(300,0,0)"/>
+      <ellipse cx="0" cy="-30" rx="6" ry="18" transform="rotate(330,0,0)"/>
+    </g>
+    <circle cx="0" cy="0" r="12" fill="#92400e"/>
+    <circle cx="-3" cy="-4" r="2" fill="#fef3c7" opacity="0.6"/>
+    <circle cx="4" cy="-2" r="2" fill="#fef3c7" opacity="0.6"/>
+    <circle cx="-1" cy="3" r="2" fill="#fef3c7" opacity="0.6"/>
+  </g>
+  <!-- ====== Tulips Left Center ====== -->
+  <g transform="translate(400, 380)">
+    <path d="M20,0 Q15,50 20,110 Q22,150 15,200" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M45,0 Q40,40 45,100 Q48,140 42,190" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M18,80 Q-10,60 -15,90 Q-5,75 18,80Z" fill="#4ade80" opacity="0.7"/>
+    <path d="M46,70 Q80,50 85,80 Q75,65 46,70Z" fill="#4ade80" opacity="0.7"/>
+    <g transform="translate(20,-5)">
+      <path d="M-8,15 Q-14,0 -10,-15 Q-5,-25 0,-28 Q5,-25 10,-15 Q14,0 8,15 Z" fill="#fb7185"/>
+      <path d="M-8,15 Q-12,5 -8,-8 Q-3,-18 0,-22 Q-5,-15 -10,0 Z" fill="#f43f5e" opacity="0.6"/>
+    </g>
+    <g transform="translate(45,-5)">
+      <path d="M-8,15 Q-14,0 -10,-15 Q-5,-25 0,-28 Q5,-25 10,-15 Q14,0 8,15 Z" fill="#f472b6"/>
+      <path d="M-8,15 Q-12,5 -8,-8 Q-3,-18 0,-22 Q-5,-15 -10,0 Z" fill="#ec4899" opacity="0.6"/>
+    </g>
+  </g>
+  <!-- ====== Lavender Right Center ====== -->
+  <g transform="translate(1050, 350)">
+    <path d="M0,0 L0,120" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M0,120 Q-20,140 -25,170" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M0,120 Q20,140 25,170" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <g fill="url(#lavender)" opacity="0.85">
+      <circle cx="0" cy="-5" r="5"/>
+      <circle cx="-8" cy="0" r="5"/>
+      <circle cx="8" cy="0" r="5"/>
+      <circle cx="-4" cy="8" r="5"/>
+      <circle cx="4" cy="8" r="5"/>
+      <circle cx="0" cy="15" r="4"/>
+      <circle cx="-6" cy="22" r="4"/>
+      <circle cx="6" cy="22" r="4"/>
+      <circle cx="0" cy="30" r="3.5"/>
+      <circle cx="-4" cy="37" r="3"/>
+      <circle cx="4" cy="37" r="3"/>
+    </g>
+  </g>
+  <!-- ====== Daisy Far Left ====== -->
+  <g transform="translate(80, 430)">
+    <path d="M0,20 Q5,70 0,130" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M1,60 Q-25,50 -30,70 Q-20,55 1,60Z" fill="#4ade80" opacity="0.7"/>
+    <g fill="#fff" stroke="#fde68a" stroke-width="0.5">
+      <ellipse cx="0" cy="-18" rx="5" ry="14"/>
+      <ellipse cx="0" cy="-18" rx="5" ry="14" transform="rotate(45,0,0)"/>
+      <ellipse cx="0" cy="-18" rx="5" ry="14" transform="rotate(90,0,0)"/>
+      <ellipse cx="0" cy="-18" rx="5" ry="14" transform="rotate(135,0,0)"/>
+      <ellipse cx="0" cy="-18" rx="5" ry="14" transform="rotate(180,0,0)"/>
+      <ellipse cx="0" cy="-18" rx="5" ry="14" transform="rotate(225,0,0)"/>
+      <ellipse cx="0" cy="-18" rx="5" ry="14" transform="rotate(270,0,0)"/>
+      <ellipse cx="0" cy="-18" rx="5" ry="14" transform="rotate(315,0,0)"/>
+    </g>
+    <circle cx="0" cy="0" r="7" fill="#facc15"/>
+  </g>
+  <!-- ====== Peony Bottom Center ====== -->
+  <g transform="translate(650, 420)">
+    <path d="M0,20 Q-10,80 5,150" stroke="#16a34a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M3,80 Q40,60 45,90 Q35,75 3,80Z" fill="#4ade80" opacity="0.7"/>
+    <path d="M0,110 Q-40,90 -45,120 Q-35,105 0,110Z" fill="#4ade80" opacity="0.7"/>
+    <g transform="translate(0,-5)">
+      <ellipse cx="-10" cy="-10" rx="18" ry="22" fill="url(#petalPink)" opacity="0.8" transform="rotate(-20,-10,-10)"/>
+      <ellipse cx="15" cy="-12" rx="18" ry="22" fill="url(#petalPink)" opacity="0.8" transform="rotate(20,15,-12)"/>
+      <ellipse cx="-15" cy="8" rx="18" ry="22" fill="url(#petalPurple)" opacity="0.8" transform="rotate(-40,-15,8)"/>
+      <ellipse cx="18" cy="10" rx="18" ry="22" fill="url(#petalPurple)" opacity="0.8" transform="rotate(40,18,10)"/>
+      <ellipse cx="0" cy="-20" rx="16" ry="20" fill="url(#petalPink)" opacity="0.85"/>
+      <ellipse cx="0" cy="0" rx="14" ry="16" fill="url(#petalPurple)" opacity="0.9"/>
+      <circle cx="0" cy="-2" r="6" fill="#ec4899"/>
+    </g>
+  </g>
+  <!-- ====== Floating petals ====== -->
+  <g opacity="0.3">
+    <ellipse cx="100" cy="180" rx="8" ry="12" fill="#f472b6" transform="rotate(25,100,180)"/>
+    <ellipse cx="500" cy="150" rx="6" ry="10" fill="#a78bfa" transform="rotate(-15,500,150)"/>
+    <ellipse cx="800" cy="200" rx="7" ry="11" fill="#fb7185" transform="rotate(40,800,200)"/>
+    <ellipse cx="1100" cy="120" rx="5" ry="9" fill="#c084fc" transform="rotate(-30,1100,120)"/>
+    <ellipse cx="1350" cy="200" rx="6" ry="10" fill="#f472b6" transform="rotate(20,1350,200)"/>
+    <ellipse cx="300" cy="500" rx="7" ry="11" fill="#a78bfa" transform="rotate(-35,300,500)"/>
+    <ellipse cx="900" cy="520" rx="6" ry="9" fill="#fb7185" transform="rotate(45,900,520)"/>
+  </g>
+  <!-- ====== Dew dots ====== -->
+  <g fill="#fff" opacity="0.25">
+    <circle cx="250" cy="280" r="3"/>
+    <circle cx="550" cy="220" r="2"/>
+    <circle cx="700" cy="300" r="2.5"/>
+    <circle cx="950" cy="180" r="2"/>
+    <circle cx="1150" cy="300" r="3"/>
+    <circle cx="140" cy="380" r="2"/>
+    <circle cx="1300" cy="180" r="2.5"/>
+  </g>
+</svg>

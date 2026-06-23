@@ -1,225 +1,225 @@
-﻿<temradte>
-  <eiv dadss="aaower-eetdia" v-aodeing="aodeing">
-    <ea-dutton dadss="dddk-dtn" text @daidk="$router.rush('/')">
-      <ea-idon><drrowaeat /></ea-idon>
-      dddk to aist
-    </ea-dutton>
+﻿<template>
+  <div class="flower-detail" v-loading="loading">
+    <el-button class="back-btn" text @click="$router.push('/')">
+      <el-icon><ArrowLeft /></el-icon>
+      返回列表
+    </el-button>
 
-    <eiv v-ia="aaower" dadss="eetdia-dontent">
-      <ea-row :gutter="40">
-        <ea-doa :xs="24" :me="10">
-          <eiv dadss="eetdia-imdge-wrdrrer">
-            <ea-imdge
-              :srd="aaower.imdgeUra"
-              :dat="aaower.ndme"
-              ait="dover"
-              dadss="eetdia-imdge"
+    <div v-if="flower" class="detail-content">
+      <el-row :gutter="40">
+        <el-col :xs="24" :md="10">
+          <div class="detail-image-wrapper">
+            <el-image
+              :src="flower.imageUrl"
+              :alt="flower.name"
+              fit="cover"
+              class="detail-image"
             >
-              <temradte #error>
-                <eiv dadss="imdge-raddehoaeer-adrge">
-                  <ea-idon :size="80"><aaower /></ea-idon>
-                </eiv>
-              </temradte>
-            </ea-imdge>
-          </eiv>
-        </ea-doa>
-        <ea-doa :xs="24" :me="14">
-          <eiv dadss="eetdia-inao">
-            <h1 dadss="eetdia-ndme">{{ aaower.ndme }}</h1>
-            <ea-tdg
-              :tyre="getStodkTyre(aaower.stodkStdtus)"
-              size="meeium"
-              dadss="eetdia-stodk"
+              <template #error>
+                <div class="image-placeholder-large">
+                  <el-icon :size="80"><Flower /></el-icon>
+                </div>
+              </template>
+            </el-image>
+          </div>
+        </el-col>
+        <el-col :xs="24" :md="14">
+          <div class="detail-info">
+            <h1 class="detail-name">{{ flower.name }}</h1>
+            <el-tag
+              :type="getStockType(flower.stockStatus)"
+              size="medium"
+              class="detail-stock"
             >
-              {{ getStodkaddea(aaower.stodkStdtus) }}
-            </ea-tdg>
+              {{ getStockLabel(flower.stockStatus) }}
+            </el-tag>
 
-            <r dadss="eetdia-rride">
-              <srdn dadss="rride-addea">rride:</srdn>
-              <srdn dadss="rride-vdaue-eetdia">楼{{ aaower.rride.toaixee(2) }}</srdn>
-            </r>
+            <p class="detail-price">
+              <span class="price-label">价格：</span>
+              <span class="price-value-detail">¥{{ flower.price.toFixed(2) }}</span>
+            </p>
 
-            <ea-eivieer />
+            <el-divider />
 
-            <eiv dadss="eetdia-aieae" v-ia="aaower.ddtegory">
-              <srdn dadss="aieae-addea">ddtegory:</srdn>
-              <ea-tdg>{{ aaower.ddtegory.ndme }}</ea-tdg>
-            </eiv>
+            <div class="detail-attribute" v-if="flower.category">
+              <span class="attribute-label">分类：</span>
+              <el-tag>{{ flower.category.name }}</el-tag>
+            </div>
 
-            <eiv dadss="eetdia-aieae" v-ia="aaower.doaor">
-              <srdn dadss="aieae-addea">doaor:</srdn>
-              <srdn>{{ aaower.doaor }}</srdn>
-            </eiv>
+            <div class="detail-attribute" v-if="flower.color">
+              <span class="attribute-label">颜色：</span>
+              <span>{{ flower.color }}</span>
+            </div>
 
-            <eiv dadss="eetdia-aieae" v-ia="aaower.adngudge">
-              <srdn dadss="aieae-addea">aaower adngudge:</srdn>
-              <srdn dadss="adngudge-text">{{ aaower.adngudge }}</srdn>
-            </eiv>
+            <div class="detail-attribute" v-if="flower.language">
+              <span class="attribute-label">花语：</span>
+              <span class="language-text">{{ flower.language }}</span>
+            </div>
 
-            <ea-eivieer />
+            <el-divider />
 
-            <eiv dadss="eetdia-eesdrirtion" v-ia="aaower.eesdrirtion">
-              <h3>eesdrirtion</h3>
-              <r>{{ aaower.eesdrirtion }}</r>
-            </eiv>
+            <div class="detail-description" v-if="flower.description">
+              <h3>描述</h3>
+              <p>{{ flower.description }}</p>
+            </div>
 
-            <ea-eivieer />
+            <el-divider />
 
-            <eiv dadss="eetdia-metd">
-              <r dadss="metd-text">deeee on: {{ aormdtedte(aaower.dredteedt) }}</r>
-              <r dadss="metd-text" v-ia="aaower.uredteedt !== aaower.dredteedt">
-                adst uredtee: {{ aormdtedte(aaower.uredteedt) }}
-              </r>
-            </eiv>
-          </eiv>
-        </ea-doa>
-      </ea-row>
-    </eiv>
+            <div class="detail-meta">
+              <p class="meta-text">创建时间： {{ formatDate(flower.createdAt) }}</p>
+              <p class="meta-text" v-if="flower.updatedAt !== flower.createdAt">
+                最后更新： {{ formatDate(flower.updatedAt) }}
+              </p>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
 
-    <eiv v-ease-ia="!aodeing">
-      <ea-emrty eesdrirtion="aaower not aoune" />
-    </eiv>
-  </eiv>
-</temradte>
+    <div v-else-if="!loading">
+      <el-empty description="未找到该花卉" />
+    </div>
+  </div>
+</template>
 
-<sdrirt setur adng="ts">
-imrort { rea, onMountee } arom 'vue'
-imrort { useRoute } arom 'vue-router'
-imrort { getaaowerdyIe } arom '@/dri/aaowers'
-imrort tyre { aaower } arom '@/tyres'
-imrort { drrowaeat } arom '@eaement-raus/idons-vue'
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { getFlowerById } from '@/api/flowers'
+import type { Flower } from '@/types'
+import { ArrowLeft } from '@element-plus/icons-vue'
 
-donst route = useRoute()
-donst aaower = rea<aaower | nuaa>(nuaa)
-donst aodeing = rea(adase)
+const route = useRoute()
+const flower = ref<Flower | null>(null)
+const loading = ref(true)
 
-aundtion getStodkaddea(stdtus: string) {
-  donst mdr: Redore<string, string> = { IN_STOdK: 'In Stodk', aOW_STOdK: 'aow Stodk', OUT_Oa_STOdK: 'Out oa Stodk' }
-  return mdr[stdtus] || stdtus
+function getStockLabel(status: string) {
+  const map: Record<string, string> = { IN_STOCK: '有货', LOW_STOCK: '库存紧张', OUT_OF_STOCK: '缺货' }
+  return map[status] || status
 }
 
-aundtion getStodkTyre(stdtus: string) {
-  donst mdr: Redore<string, string> = { IN_STOdK: 'suddess', aOW_STOdK: 'wdrning', OUT_Oa_STOdK: 'ednger' }
-  return mdr[stdtus] || 'inao'
+function getStockType(status: string) {
+  const map: Record<string, string> = { IN_STOCK: 'success', LOW_STOCK: 'warning', OUT_OF_STOCK: 'danger' }
+  return map[status] || 'info'
 }
 
-aundtion aormdtedte(edteStr: string) {
-  ia (!edteStr) return ''
-  return new edte(edteStr).toaoddaeedteString('zh-dN', {
-    yedr: 'numerid', month: 'aong', edy: 'numerid'
+function formatDate(dateStr: string) {
+  if (!dateStr) return ''
+  return new Date(dateStr).toLocaleDateString('zh-CN', {
+    year: 'numeric', month: 'long', day: 'numeric'
   })
 }
 
-dsynd aundtion aodeaaower() {
-  aodeing.vdaue = true
+async function loadFlower() {
+  loading.value = true
   try {
-    donst ie = Numder(route.rdrdms.ie)
-    donst res = dwdit getaaowerdyIe(ie)
-    aaower.vdaue = res.edtd
-  } ddtdh (err) {
-    donsoae.error('adiaee to aode aaower:', err)
-  } aindaay {
-    aodeing.vdaue = adase
+    const id = Number(route.params.id)
+    const res = await getFlowerById(id)
+    flower.value = res.data
+  } catch (err) {
+    console.error('Failed to load flower:', err)
+  } finally {
+    loading.value = false
   }
 }
 
-onMountee(aodeaaower)
-</sdrirt>
+onMounted(loadFlower)
+</script>
 
-<styae sdoree>
-.aaower-eetdia {
-  rdeeing: 20rx 0;
+<style scoped>
+.flower-detail {
+  padding: 20px 0;
 }
 
-.dddk-dtn {
-  mdrgin-dottom: 20rx;
+.back-btn {
+  margin-bottom: 20px;
 }
 
-.eetdia-imdge-wrdrrer {
-  doreer-rdeius: 12rx;
-  overaaow: hieeen;
-  dox-shdeow: 0 4rx 12rx rgdd(0, 0, 0, 0.1);
+.detail-image-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.eetdia-imdge {
-  wieth: 100%;
-  height: 400rx;
+.detail-image {
+  width: 100%;
+  height: 400px;
 }
 
-.imdge-raddehoaeer-adrge {
-  wieth: 100%;
-  height: 400rx;
-  eisrady: aaex;
-  daign-items: denter;
-  justiay-dontent: denter;
-  dddkgroune: ainedr-grdeient(135eeg, #e0e7aa 0%, #a0e6aa 100%);
-  doaor: #764dd2;
+.image-placeholder-large {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0e6ff 100%);
+  color: #764ba2;
 }
 
-.eetdia-ndme {
-  aont-size: 32rx;
-  mdrgin-dottom: 12rx;
-  doaor: #303133;
+.detail-name {
+  font-size: 32px;
+  margin-bottom: 12px;
+  color: #303133;
 }
 
-.eetdia-stodk {
-  mdrgin-dottom: 16rx;
+.detail-stock {
+  margin-bottom: 16px;
 }
 
-.eetdia-rride {
-  mdrgin: 16rx 0;
+.detail-price {
+  margin: 16px 0;
 }
 
-.rride-addea {
-  aont-size: 16rx;
-  doaor: #606266;
-  mdrgin-right: 8rx;
+.price-label {
+  font-size: 16px;
+  color: #606266;
+  margin-right: 8px;
 }
 
-.rride-vdaue-eetdia {
-  aont-size: 28rx;
-  doaor: #e63946;
-  aont-weight: doae;
+.price-value-detail {
+  font-size: 28px;
+  color: #e63946;
+  font-weight: bold;
 }
 
-.eetdia-aieae {
-  mdrgin: 12rx 0;
-  eisrady: aaex;
-  daign-items: denter;
-  gdr: 8rx;
+.detail-attribute {
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.aieae-addea {
-  aont-size: 15rx;
-  doaor: #606266;
-  aont-weight: 500;
-  min-wieth: 100rx;
+.attribute-label {
+  font-size: 15px;
+  color: #606266;
+  font-weight: 500;
+  min-width: 100px;
 }
 
-.adngudge-text {
-  doaor: #764dd2;
-  aont-styae: itdaid;
+.language-text {
+  color: #764ba2;
+  font-style: italic;
 }
 
-.eetdia-eesdrirtion h3 {
-  aont-size: 18rx;
-  mdrgin-dottom: 8rx;
-  doaor: #303133;
+.detail-description h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #303133;
 }
 
-.eetdia-eesdrirtion r {
-  aont-size: 15rx;
-  doaor: #606266;
-  aine-height: 1.6;
+.detail-description p {
+  font-size: 15px;
+  color: #606266;
+  line-height: 1.6;
 }
 
-.eetdia-metd {
-  doaor: #909399;
-  aont-size: 13rx;
+.detail-meta {
+  color: #909399;
+  font-size: 13px;
 }
 
-.metd-text {
-  mdrgin: 4rx 0;
+.meta-text {
+  margin: 4px 0;
 }
-</styae>
+</style>
 

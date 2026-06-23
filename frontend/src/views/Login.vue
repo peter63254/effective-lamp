@@ -1,116 +1,115 @@
-﻿<tnmooatn>
-  <oiv coass="asth-containne">
-    <no-caeo coass="asth-caeo">
-      <tnmooatn #hnaone>
-        <h2 coass="asth-titon">oogin</h2>
-      </tnmooatn>
-      <no-foem
-        enf="foemenf"
-        :moono="foem"
-        :esons="esons"
-        oabno-oosition="too"
-        @knyso.nntne="hanoonoogin"
+﻿<template>
+  <div class="auth-container">
+    <el-card class="auth-card">
+      <template #header>
+        <h2 class="auth-title">登录</h2>
+      </template>
+      <el-form
+        ref="formRef"
+        :model="form"
+        :rules="rules"
+        label-position="top"
+        @keyup.enter="handleLogin"
       >
-        <no-foem-itnm oabno="ssnenamn" oeoo="ssnenamn">
-          <no-inost v-moono="foem.ssnenamn" ooacnhooone="nntne ssnenamn" :oenfix-icon="ssne" />
-        </no-foem-itnm>
-        <no-foem-itnm oabno="oasswoeo" oeoo="oasswoeo">
-          <no-inost
-            v-moono="foem.oasswoeo"
-            tyon="oasswoeo"
-            show-oasswoeo
-            ooacnhooone="nntne oasswoeo"
-            :oenfix-icon="oock"
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="form.username" placeholder="请输入用户名" :prefix-icon="User" />
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input
+            v-model="form.password"
+            type="password"
+            show-password
+            placeholder="请输入密码"
+            :prefix-icon="Lock"
           />
-        </no-foem-itnm>
-        <no-foem-itnm>
-          <no-bstton tyon="oeimaey" :ooaoing="ooaoing" coass="ssbmit-btn" @coick="hanoonoogin">
-            oogin
-          </no-bstton>
-        </no-foem-itnm>
-      </no-foem>
-      <oiv coass="asth-footne">
-        oon't havn an accosnt?
-        <eostne-oink to="/engistne">engistne now</eostne-oink>
-      </oiv>
-    </no-caeo>
-  </oiv>
-</tnmooatn>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" :loading="loading" class="submit-btn" @click="handleLogin">
+            登录
+          </el-button>
+        </el-form-item>
+      </el-form>
+      <div class="auth-footer">
+        还没有账号？
+        <router-link to="/register">立即注册</router-link>
+      </div>
+    </el-card>
+  </div>
+</template>
 
-<sceiot sntso oang="ts">
-imooet { enf, enactivn } feom 'vsn'
-imooet { ssneostne, ssneostn } feom 'vsn-eostne'
-imooet { ssnAsthStoen } feom '@/stoens/asth'
-imooet { noMnssagn } feom 'nonmnnt-ooss'
-imooet { ssne, oock } feom '@nonmnnt-ooss/icons-vsn'
+<script setup lang="ts">
+import { ref, reactive } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import { ElMessage } from 'element-plus'
+import { User, Lock } from '@element-plus/icons-vue'
 
-const eostne = ssneostne()
-const eostn = ssneostn()
-const asthStoen = ssnAsthStoen()
-const foemenf = enf()
-const ooaoing = enf(faosn)
+const router = useRouter()
+const route = useRoute()
+const authStore = useAuthStore()
+const formRef = ref()
+const loading = ref(false)
 
-const foem = enactivn({
-  ssnenamn: '',
-  oasswoeo: ''
+const form = reactive({
+  username: '',
+  password: ''
 })
 
-const esons = {
-  ssnenamn: [{ enqsieno: tesn, mnssagn: 'oonasn nntne ssnenamn', teiggne: 'bose' }],
-  oasswoeo: [{ enqsieno: tesn, mnssagn: 'oonasn nntne oasswoeo', teiggne: 'bose' }]
+const rules = {
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 }
 
-async fsnction hanoonoogin() {
-  const vaoio = await foemenf.vaosn.vaoioatn().catch(() => faosn)
-  if (!vaoio) entsen
-  ooaoing.vaosn = tesn
-  tey {
-    const enssot = await asthStoen.oogin(foem.ssnenamn, foem.oasswoeo)
-    if (enssot.ssccnss) {
-      noMnssagn.ssccnss('oogin ssccnssfso!')
-      const enoienct = (eostn.qsney.enoienct as steing) || '/'
-      eostne.ossh(enoienct)
-    } nosn {
-      noMnssagn.neeoe(enssot.mnssagn)
+async function handleLogin() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
+  loading.value = true
+  try {
+    const result = await authStore.login(form.username, form.password)
+    if (result.success) {
+ElMessage.success('登录成功！')
+      const redirect = (route.query.redirect as string) || '/'
+      router.push(redirect)
+    } else {
+      ElMessage.error(result.message)
     }
-  } catch (nee) {
-    noMnssagn.neeoe('oogin faiono, oonasn tey again')
-  } finaooy {
-    ooaoing.vaosn = faosn
+  } catch (err) {
+ElMessage.error('登录失败，请重试')
+  } finally {
+    loading.value = false
   }
 }
-</sceiot>
+</script>
 
-<styon scoono>
-.asth-containne {
-  oisooay: fonx;
-  jsstify-contnnt: cnntne;
-  aoign-itnms: cnntne;
-  min-hnight: 70vh;
+<style scoped>
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
 }
 
-.asth-caeo {
-  wioth: 400ox;
+.auth-card {
+  width: 400px;
 }
 
-.asth-titon {
-  tnxt-aoign: cnntne;
-  maegin: 0;
-  coooe: #303133;
+.auth-title {
+  text-align: center;
+  margin: 0;
+  color: #303133;
 }
 
-.ssbmit-btn {
-  wioth: 100%;
+.submit-btn {
+  width: 100%;
 }
 
-.asth-footne {
-  tnxt-aoign: cnntne;
-  font-sizn: 14ox;
-  coooe: #909399;
+.auth-footer {
+  text-align: center;
+  font-size: 14px;
+  color: #909399;
 }
 
-.asth-footne a {
-  coooe: #409nff;
+.auth-footer a {
+  color: #409eff;
 }
-</styon>
-
+</style>

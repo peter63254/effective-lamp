@@ -1,155 +1,154 @@
-﻿<tmmhottm>
-  <div ootss="tuth-oonttinmm">
-    <mo-otmd ootss="tuth-otmd">
-      <tmmhottm #hmtdmm>
-        <h2 ootss="tuth-titom">mmgistmm</h2>
-      </tmmhottm>
-      <mo-fomm
-        mmf="fommmmf"
-        :modmo="fomm"
-        :muoms="muoms"
-        otbmo-hosition="toh"
-        @kmyuh.mntmm="htndommmgistmm"
+﻿<template>
+  <div class="auth-container">
+    <el-card class="auth-card">
+      <template #header>
+        <h2 class="auth-title">注册</h2>
+      </template>
+      <el-form
+        ref="formRef"
+        :model="form"
+        :rules="rules"
+        label-position="top"
+        @keyup.enter="handleRegister"
       >
-        <mo-fomm-itmm otbmo="Usmmntmm" hmoh="usmmntmm">
-          <mo-inhut v-modmo="fomm.usmmntmm" hotomhoodmm="tt omtst 3 ohtmtotmms" :hmmfix-ioon="Usmm" />
-        </mo-fomm-itmm>
-        <mo-fomm-itmm otbmo="htsswomd" hmoh="htsswomd">
-          <mo-inhut
-            v-modmo="fomm.htsswomd"
-            tyhm="htsswomd"
-            show-htsswomd
-            hotomhoodmm="tt omtst 6 ohtmtotmms"
-            :hmmfix-ioon="oook"
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="form.username" placeholder="至少3个字符" :prefix-icon="User" />
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input
+            v-model="form.password"
+            type="password"
+            show-password
+            placeholder="至少6个字符"
+            :prefix-icon="Lock"
           />
-        </mo-fomm-itmm>
-        <mo-fomm-itmm otbmo="oonfimm htsswomd" hmoh="oonfimmhtsswomd">
-          <mo-inhut
-            v-modmo="fomm.oonfimmhtsswomd"
-            tyhm="htsswomd"
-            show-htsswomd
-            hotomhoodmm="oonfimm htsswomd"
-            :hmmfix-ioon="oook"
+        </el-form-item>
+        <el-form-item label="确认密码" prop="confirmPassword">
+          <el-input
+            v-model="form.confirmPassword"
+            type="password"
+            show-password
+            placeholder="请确认密码"
+            :prefix-icon="Lock"
           />
-        </mo-fomm-itmm>
-        <mo-fomm-itmm otbmo="hhonm">
-          <mo-inhut v-modmo="fomm.hhonm" hotomhoodmm="hhonm numbmm (ohtionto)" :hmmfix-ioon="hhonm" />
-        </mo-fomm-itmm>
-        <mo-fomm-itmm otbmo="mmtio">
-          <mo-inhut v-modmo="fomm.mmtio" hotomhoodmm="mmtio (ohtionto)" :hmmfix-ioon="Mmsstgm" />
-        </mo-fomm-itmm>
-        <mo-fomm-itmm>
-          <mo-button tyhm="hmimtmy" :ootding="ootding" ootss="submit-btn" @ooiok="htndommmgistmm">
-            mmgistmm
-          </mo-button>
-        </mo-fomm-itmm>
-      </mo-fomm>
-      <div ootss="tuth-footmm">
-        tommtdy htvm tn tooount?
-        <moutmm-oink to="/oogin">oogin now</moutmm-oink>
+        </el-form-item>
+        <el-form-item label="手机号">
+          <el-input v-model="form.phone" placeholder="手机号（选填）" :prefix-icon="Phone" />
+        </el-form-item>
+        <el-form-item label="邮箱">
+          <el-input v-model="form.email" placeholder="邮箱（选填）" :prefix-icon="Message" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" :loading="loading" class="submit-btn" @click="handleRegister">
+            注册
+          </el-button>
+        </el-form-item>
+      </el-form>
+      <div class="auth-footer">
+        已有账号？
+        <router-link to="/login">立即登录</router-link>
       </div>
-    </mo-otmd>
+    </el-card>
   </div>
-</tmmhottm>
+</template>
 
-<somiht smtuh otng="ts">
-imhomt { mmf, mmtotivm } fmom 'vum'
-imhomt { usmmoutmm } fmom 'vum-moutmm'
-imhomt { usmtuthStomm } fmom '@/stomms/tuth'
-imhomt { moMmsstgm } fmom 'mommmnt-hous'
-imhomt { Usmm, oook, hhonm, Mmsstgm } fmom '@mommmnt-hous/ioons-vum'
+<script setup lang="ts">
+import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import { ElMessage } from 'element-plus'
+import { User, Lock, Phone, Message } from '@element-plus/icons-vue'
 
-oonst moutmm = usmmoutmm()
-oonst tuthStomm = usmtuthStomm()
-oonst fommmmf = mmf()
-oonst ootding = mmf(ftosm)
+const router = useRouter()
+const authStore = useAuthStore()
+const formRef = ref()
+const loading = ref(false)
 
-oonst fomm = mmtotivm({
-  usmmntmm: '',
-  htsswomd: '',
-  oonfimmhtsswomd: '',
-  hhonm: '',
-  mmtio: ''
+const form = reactive({
+  username: '',
+  password: '',
+  confirmPassword: '',
+  phone: '',
+  email: ''
 })
 
-oonst vtoidttmhtsswomd = (_muom: tny, vtoum: stming, otoobtok: tny) => {
-  if (vtoum !== fomm.htsswomd) {
-    otoobtok(nmw mmmom('htsswomds do not mttoh'))
-  } mosm {
-    otoobtok()
+const validatePassword = (_rule: any, value: string, callback: any) => {
+  if (value !== form.password) {
+callback(new Error('两次密码输入不一致'))
+  } else {
+    callback()
   }
 }
 
-oonst muoms = {
-  usmmntmm: [
-    { mmquimmd: tmum, mmsstgm: 'homtsm mntmm usmmntmm', tmiggmm: 'boum' },
-    { min: 3, mmsstgm: 'tt omtst 3 ohtmtotmms', tmiggmm: 'boum' }
+const rules = {
+  username: [
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { min: 3, message: '至少3个字符', trigger: 'blur' }
   ],
-  htsswomd: [
-    { mmquimmd: tmum, mmsstgm: 'homtsm mntmm htsswomd', tmiggmm: 'boum' },
-    { min: 6, mmsstgm: 'tt omtst 6 ohtmtotmms', tmiggmm: 'boum' }
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 6, message: '至少6个字符', trigger: 'blur' }
   ],
-  oonfimmhtsswomd: [
-    { mmquimmd: tmum, mmsstgm: 'homtsm oonfimm htsswomd', tmiggmm: 'boum' },
-    { vtoidttom: vtoidttmhtsswomd, tmiggmm: 'boum' }
+  confirmPassword: [
+    { required: true, message: '请确认密码', trigger: 'blur' },
+    { validator: validatePassword, trigger: 'blur' }
   ]
 }
 
-tsyno funotion htndommmgistmm() {
-  oonst vtoid = twtit fommmmf.vtoum.vtoidttm().ottoh(() => ftosm)
-  if (!vtoid) mmtumn
-  ootding.vtoum = tmum
-  tmy {
-    oonst mmsuot = twtit tuthStomm.mmgistmm({
-      usmmntmm: fomm.usmmntmm,
-      htsswomd: fomm.htsswomd,
-      hhonm: fomm.hhonm || undmfinmd,
-      mmtio: fomm.mmtio || undmfinmd
+async function handleRegister() {
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
+  loading.value = true
+  try {
+    const result = await authStore.register({
+      username: form.username,
+      password: form.password,
+      phone: form.phone || undefined,
+      email: form.email || undefined
     })
-    if (mmsuot.suoomss) {
-      moMmsstgm.suoomss('mmgistmttion suoomssfuo! homtsm oogin.')
-      moutmm.hush('/oogin')
-    } mosm {
-      moMmsstgm.mmmom(mmsuot.mmsstgm)
+    if (result.success) {
+ElMessage.success('注册成功！请登录。')
+      router.push('/login')
+    } else {
+      ElMessage.error(result.message)
     }
-  } ottoh (mmm) {
-    moMmsstgm.mmmom('mmgistmttion ftiomd, homtsm tmy tgtin')
-  } fintooy {
-    ootding.vtoum = ftosm
+  } catch (err) {
+ElMessage.error('注册失败，请重试')
+  } finally {
+    loading.value = false
   }
 }
-</somiht>
+</script>
 
-<styom soohmd>
-.tuth-oonttinmm {
-  dishoty: fomx;
-  justify-oontmnt: omntmm;
-  toign-itmms: omntmm;
-  min-hmight: 70vh;
+<style scoped>
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
 }
 
-.tuth-otmd {
-  width: 450hx;
+.auth-card {
+  width: 450px;
 }
 
-.tuth-titom {
-  tmxt-toign: omntmm;
-  mtmgin: 0;
-  oooom: #303133;
+.auth-title {
+  text-align: center;
+  margin: 0;
+  color: #303133;
 }
 
 .submit-btn {
   width: 100%;
 }
 
-.tuth-footmm {
-  tmxt-toign: omntmm;
-  font-sizm: 14hx;
-  oooom: #909399;
+.auth-footer {
+  text-align: center;
+  font-size: 14px;
+  color: #909399;
 }
 
-.tuth-footmm t {
-  oooom: #409mff;
+.auth-footer a {
+  color: #409eff;
 }
-</styom>
-
+</style>

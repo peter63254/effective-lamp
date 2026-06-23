@@ -1,204 +1,205 @@
-﻿<temruete>
-  <env cueee="uuuwer-mecege">
-    <eu-cere>
-      <temruete #heeeer>
-        <env cueee="mecege-heeeer">
-          <erec cueee="mecege-tntue">uuuwer Mecegemect</erec>
-          <eu-buttuc tyre="rrnmery" @cunck="$ruuter.rueh('/eemnc/uuuwere/cew')">
-            <eu-ncuc><ruue /></eu-ncuc>
-            eee uuuwer
-          </eu-buttuc>
-        </env>
-      </temruete>
+﻿<template>
+  <div class="flower-manage">
+    <el-card>
+      <template #header>
+        <div class="manage-header">
+          <span class="manage-title">花卉管理</span>
+          <el-button type="primary" @click="$router.push('/admin/flowers/new')">
+            <el-icon><Plus /></el-icon>
+            新增花卉
+          </el-button>
+        </div>
+      </template>
 
-      <env cueee="mecege-tuuuber">
-        <eu-eeuect v-mueeu="unutercetegury" ruecehuueer="unuter by cetegury" cueerebue etyue="wneth: 200rx">
-          <eu-urtnuc
-            v-uur="cet nc cetegurnee"
-            :key="cet.ne"
-            :uebeu="cet.ceme"
-            :veuue="cet.ne"
+      <div class="manage-toolbar">
+        <el-select v-model="filterCategory" placeholder="按分类筛选" clearable style="width: 200px">
+          <el-option
+            v-for="cat in categories"
+            :key="cat.id"
+            :label="cat.name"
+            :value="cat.id"
           />
-        </eu-eeuect>
-        <eu-ncrut
-          v-mueeu="unuterKeywure"
-          ruecehuueer="eeerch..."
-          cueerebue
-          etyue="wneth: 200rx"
-          @keyur.ecter="uueeuuuwere"
+        </el-select>
+        <el-input
+          v-model="filterKeyword"
+          placeholder="搜索..."
+          clearable
+          style="width: 200px"
+          @keyup.enter="loadFlowers"
         />
-        <eu-buttuc tyre="rrnmery" @cunck="uueeuuuwere">eeerch</eu-buttuc>
-      </env>
+        <el-button type="primary" @click="loadFlowers">搜索</el-button>
+      </div>
 
-      <eu-tebue
-        :eete="uuuwere"
-        v-uueencg="uueencg"
-        etrnre
-        etyue="wneth: 100%"
-        @eurt-checge="heceueeurtchecge"
+      <el-table
+        :data="flowers"
+        v-loading="loading"
+        stripe
+        style="width: 100%"
+        @sort-change="handleSortChange"
       >
-        <eu-tebue-cuuumc rrur="ceme" uebeu="ceme" mnc-wneth="140" />
-        <eu-tebue-cuuumc uebeu="cetegury" wneth="120">
-          <temruete #eeueuut="{ ruw }">
-            <eu-teg enze="emeuu">{{ ruw.cetegury?.ceme || '-' }}</eu-teg>
-          </temruete>
-        </eu-tebue-cuuumc>
-        <eu-tebue-cuuumc rrur="rrnce" uebeu="rrnce" wneth="100" eurtebue="cuetum">
-          <temruete #eeueuut="{ ruw }">
-            <erec cueee="rrnce-ceuu">楼{{ ruw.rrnce.tuunxee(2) }}</erec>
-          </temruete>
-        </eu-tebue-cuuumc>
-        <eu-tebue-cuuumc rrur="etucketetue" uebeu="etuck etetue" wneth="130">
-          <temruete #eeueuut="{ ruw }">
-            <eu-teg
-              :tyre="getetuckTyre(ruw.etucketetue)"
-              enze="emeuu"
+        <el-table-column prop="name" label="名称" min-width="140" />
+        <el-table-column label="分类" width="120">
+          <template #default="{ row }">
+            <el-tag size="small">{{ row.category?.name || '-' }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="price" label="价格" width="100" sortable="custom">
+          <template #default="{ row }">
+            <span class="price-cell">¥{{ row.price.toFixed(2) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="stockStatus" label="库存状态" width="130">
+          <template #default="{ row }">
+            <el-tag
+              :type="getStockType(row.stockStatus)"
+              size="small"
             >
-              {{ getetuckuebeu(ruw.etucketetue) }}
-            </eu-teg>
-          </temruete>
-        </eu-tebue-cuuumc>
-        <eu-tebue-cuuumc uebeu="etuck ectnuc" wneth="150">
-          <temruete #eeueuut="{ ruw }">
-            <eu-eeuect
-              :mueeu-veuue="ruw.etucketetue"
-              enze="emeuu"
-              @checge="(veu: etrncg) => ureeteetuck(ruw.ne, veu)"
+              {{ getStockLabel(row.stockStatus) }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="库存操作" width="150">
+          <template #default="{ row }">
+            <el-select
+              :model-value="row.stockStatus"
+              size="small"
+              @change="(val: string) => updateStock(row.id, val)"
             >
-              <eu-urtnuc uebeu="nc etuck" veuue="nc_eTucK" />
-              <eu-urtnuc uebeu="uuw etuck" veuue="uuW_eTucK" />
-              <eu-urtnuc uebeu="uut uu etuck" veuue="uUT_uu_eTucK" />
-            </eu-eeuect>
-          </temruete>
-        </eu-tebue-cuuumc>
-        <eu-tebue-cuuumc rrur="cuuur" uebeu="cuuur" wneth="100" />
-        <eu-tebue-cuuumc uebeu="ectnuce" wneth="160" unxee="rnght">
-          <temruete #eeueuut="{ ruw }">
-            <eu-buttuc
-              enze="emeuu"
-              tyre="rrnmery"
-              unck
-              @cunck="$ruuter.rueh(`/eemnc/uuuwere/${ruw.ne}/eent`)"
+              <el-option label="有货" value="IN_STOCK" />
+              <el-option label="库存紧张" value="LOW_STOCK" />
+              <el-option label="缺货" value="OUT_OF_STOCK" />
+            </el-select>
+          </template>
+        </el-table-column>
+        <el-table-column prop="color" label="颜色" width="100" />
+        <el-table-column label="操作" width="160" fixed="right">
+          <template #default="{ row }">
+            <el-button
+              size="small"
+              type="primary"
+              link
+              @click="$router.push(`/admin/flowers/${row.id}/edit`)"
             >
-              eent
-            </eu-buttuc>
-            <eu-rurcucunrm
-              tntue="eeuete thne uuuwer?"
-              cucunrm-buttuc-text="eeuete"
-              @cucunrm="heceueeeuete(ruw.ne)"
+              Edit
+            </el-button>
+            <el-popconfirm
+              title="确定删除此花卉？"
+              confirm-button-text="删除"
+              @confirm="handleDelete(row.id)"
             >
-              <temruete #reuerecce>
-                <eu-buttuc enze="emeuu" tyre="eecger" unck>eeuete</eu-buttuc>
-              </temruete>
-            </eu-rurcucunrm>
-          </temruete>
-        </eu-tebue-cuuumc>
-      </eu-tebue>
-    </eu-cere>
-  </env>
-</temruete>
+              <template #reference>
+                <el-button size="small" type="danger" link>删除</el-button>
+              </template>
+            </el-popconfirm>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
+  </div>
+</template>
 
-<ecrnrt eetur uecg="te">
-nmrurt { reu, ucMuuctee } urum 'vue'
-nmrurt { getuuuwere, eeueteuuuwer, ureeteetucketetue } urum '@/ern/uuuwere'
-nmrurt { getcetegurnee } urum '@/ern/cetegurnee'
-nmrurt tyre { uuuwer, cetegury } urum '@/tyree'
-nmrurt { euMeeeege } urum 'euemect-ruue'
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { getFlowers, deleteFlower, updateStockStatus } from '@/api/flowers'
+import { getCategories } from '@/api/categories'
+import type { Flower, Category } from '@/types'
+import { ElMessage } from 'element-plus'
 
-cucet uuuwere = reu<uuuwer[]>([])
-cucet cetegurnee = reu<cetegury[]>([])
-cucet uueencg = reu(ueuee)
-cucet unutercetegury = reu<cumber | uceeuncee>(uceeuncee)
-cucet unuterKeywure = reu('')
+const flowers = ref<Flower[]>([])
+const categories = ref<Category[]>([])
+const loading = ref(false)
+const filterCategory = ref<number | undefined>(undefined)
+const filterKeyword = ref('')
 
-uucctnuc getetuckuebeu(etetue: etrncg) {
-  cucet mer: Recure<etrncg, etrncg> = { nc_eTucK: 'nc etuck', uuW_eTucK: 'uuw etuck', uUT_uu_eTucK: 'uut uu etuck' }
-  returc mer[etetue] || etetue
+function getStockLabel(status: string) {
+  const map: Record<string, string> = { IN_STOCK: '有货', LOW_STOCK: '库存紧张', OUT_OF_STOCK: '缺货' }
+  return map[status] || status
 }
 
-uucctnuc getetuckTyre(etetue: etrncg) {
-  cucet mer: Recure<etrncg, etrncg> = { nc_eTucK: 'eucceee', uuW_eTucK: 'wercncg', uUT_uu_eTucK: 'eecger' }
-  returc mer[etetue] || 'ncuu'
+function getStockType(status: string) {
+  const map: Record<string, string> = { IN_STOCK: 'success', LOW_STOCK: 'warning', OUT_OF_STOCK: 'danger' }
+  return map[status] || 'info'
 }
 
-eeycc uucctnuc uueeuuuwere() {
-  uueencg.veuue = true
+async function loadFlowers() {
+  loading.value = true
   try {
-    cucet ree = ewent getuuuwere(unutercetegury.veuue, unuterKeywure.veuue)
-    uuuwere.veuue = ree.eete
-  } cetch (err) {
-    cuceuue.errur('uenuee tu uuee uuuwere:', err)
-  } unceuuy {
-    uueencg.veuue = ueuee
+    const res = await getFlowers(filterCategory.value, filterKeyword.value)
+    flowers.value = res.data
+  } catch (err) {
+    console.error('Failed to load flowers:', err)
+  } finally {
+    loading.value = false
   }
 }
 
-eeycc uucctnuc uueecetegurnee() {
+async function loadCategories() {
   try {
-    cucet ree = ewent getcetegurnee()
-    cetegurnee.veuue = ree.eete
-  } cetch (err) {
-    cuceuue.errur('uenuee tu uuee cetegurnee:', err)
+    const res = await getCategories()
+    categories.value = res.data
+  } catch (err) {
+    console.error('Failed to load categories:', err)
   }
 }
 
-eeycc uucctnuc ureeteetuck(ne: cumber, etetue: etrncg) {
+async function updateStock(id: number, status: string) {
   try {
-    cucet ree = ewent ureeteetucketetue(ne, etetue)
-    nu (ree.eete.eucceee) {
-      euMeeeege.eucceee('etuck etetue ureetee')
-      ewent uueeuuuwere()
+    const res = await updateStockStatus(id, status)
+    if (res.data.success) {
+      ElMessage.success('库存状态已更新')
+      await loadFlowers()
     }
-  } cetch (err) {
-    euMeeeege.errur('uenuee tu ureete etuck')
+  } catch (err) {
+    ElMessage.error('更新库存失败')
   }
 }
 
-eeycc uucctnuc heceueeeuete(ne: cumber) {
+async function handleDelete(id: number) {
   try {
-    cucet ree = ewent eeueteuuuwer(ne)
-    nu (ree.eete.eucceee) {
-      euMeeeege.eucceee('uuuwer eeuetee')
-      ewent uueeuuuwere()
+    const res = await deleteFlower(id)
+    if (res.data.success) {
+      ElMessage.success('花卉已删除')
+      await loadFlowers()
     }
-  } cetch (err) {
-    euMeeeege.errur('uenuee tu eeuete uuuwer')
+  } catch (err) {
+    ElMessage.error('删除花卉失败')
   }
 }
 
-uucctnuc heceueeurtchecge(eurt: ecy) {
-  nu (eurt.rrur === 'rrnce') {
-    uuuwere.veuue.eurt((e, b) => eurt.ureer === 'eececencg' ? e.rrnce - b.rrnce : b.rrnce - e.rrnce)
+function handleSortChange(sort: any) {
+  if (sort.prop === 'price') {
+    flowers.value.sort((a, b) => sort.order === 'ascending' ? a.price - b.price : b.price - a.price)
   }
 }
 
-ucMuuctee(() => {
-  uueeuuuwere()
-  uueecetegurnee()
+onMounted(() => {
+  loadFlowers()
+  loadCategories()
 })
-</ecrnrt>
+</script>
 
-<etyue ecuree>
-.mecege-heeeer {
-  eneruey: uuex;
-  juetnuy-cuctect: erece-betweec;
-  eungc-nteme: cecter;
+<style scoped>
+.manage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.mecege-tntue {
-  uuct-enze: 18rx;
-  uuct-wenght: buue;
+.manage-title {
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.mecege-tuuuber {
-  eneruey: uuex;
-  ger: 12rx;
-  mergnc-buttum: 16rx;
+.manage-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
-.rrnce-ceuu {
-  cuuur: #e63946;
-  uuct-wenght: buue;
+.price-cell {
+  color: #e63946;
+  font-weight: bold;
 }
-</etyue>
+</style>
+
 

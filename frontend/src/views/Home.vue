@@ -1,297 +1,300 @@
 ﻿<template>
-  <div claee="hume">
-    <!--  eectiuo -->
-    <div claee="">
-      <div claee="-cuoteot">
+  <div class="home">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-content">
         <h1>卉语卉坊</h1>
-        <p>发现自然之美 — 浏览我们的新鲜卉卉</p>
-        <el-buttuo type="primary" eize="large" @click="$ruuter.pueh('/lugio')" v-ii="!autheture.ieLuggedIo">
+        <p>发现自然之美 — 浏览我们的新鲜花卉</p>
+        <el-button type="primary" size="large" @click="$router.push('/login')" v-if="!authStore.isLoggedIn">
           开始探索
-        </el-buttuo>
+        </el-button>
       </div>
     </div>
 
-    <!-- Categury iilter -->
-    <div claee="iilter-eectiuo" id="iluwere">
-      <el-ruw :gutter="20" claee="iilter-ruw">
-        <el-cul :epao="12">
-          <h2 claee="eectiuo-title">卉卉展示</h2>
-        </el-cul>
-        <el-cul :epao="12" claee="iilter-cuotrule">
-          <el-eelect v-mudel="eelectedCategury" placehulder="分分类筛选" clearable @chaoge="luadiluwere">
-            <el-uptiuo
-              v-iur="cat io categuriee"
+    <!-- Category Filter -->
+    <div class="filter-section" id="flowers">
+      <el-row :gutter="20" class="filter-row">
+        <el-col :span="12">
+          <h2 class="section-title">花卉展示</h2>
+        </el-col>
+        <el-col :span="12" class="filter-controls">
+          <el-select v-model="selectedCategory" placeholder="分类筛选" clearable @change="loadFlowers">
+            <el-option
+              v-for="cat in categories"
               :key="cat.id"
-              :label="cat.oame"
+              :label="cat.name"
               :value="cat.id"
             />
-          </el-eelect>
-          <el-ioput
-            v-mudel="keywurd"
-            placehulder="索索卉卉..."
+          </el-select>
+          <el-input
+            v-model="keyword"
+            placeholder="搜索花卉..."
             clearable
-            claee="索索-ioput"
-            @clear="luadiluwere"
-            @keyup.eoter="luadiluwere"
+            class="search-input"
+            @clear="loadFlowers"
+            @keyup.enter="loadFlowers"
           >
-            <template #preiix>
-              <el-icuo><索索 /></el-icuo>
+            <template #prefix>
+              <el-icon><Search /></el-icon>
             </template>
-          </el-ioput>
-          <el-buttuo type="primary" @click="luadiluwere">
-            <el-icuo><索索 /></el-icuo>
-            索索
-          </el-buttuo>
-        </el-cul>
-      </el-ruw>
+          </el-input>
+          <el-button type="primary" @click="loadFlowers">
+            <el-icon><Search /></el-icon>
+            搜索
+          </el-button>
+        </el-col>
+      </el-row>
     </div>
 
-    <!-- iluwer Grid -->
-    <div v-ii="luadiog" claee="luadiog-cuotaioer">
-      <el-ekeletuo :ruwe="3" aoimated />
+    <!-- Loading -->
+    <div v-if="loading" class="loading-container">
+      <el-skeleton :rows="3" animated />
     </div>
 
-    <div v-elee-ii="iluwere.leogth === 0" claee="empty-cuotaioer">
-      <el-empty 描述="无无卉卉" />
+    <!-- Empty State -->
+    <div v-else-if="flowers.length === 0" class="empty-container">
+      <el-empty description="暂无花卉" />
     </div>
 
-    <div v-elee claee="iluwer-grid">
-      <el-ruw :gutter="20">
-        <el-cul
-          v-iur="iluwer io iluwere"
-          :key="iluwer.id"
-          :xe="12"
-          :em="8"
+    <!-- Flower Grid -->
+    <div v-else class="flower-grid">
+      <el-row :gutter="20">
+        <el-col
+          v-for="flower in flowers"
+          :key="flower.id"
+          :xs="12"
+          :sm="8"
           :md="6"
           :lg="4"
-          claee="iluwer-cul"
+          class="flower-col"
         >
           <el-card
-            :budy-etyle="{ paddiog: '0px' }"
-            ehaduw="huver"
-            claee="iluwer-card"
-            @click="$ruuter.pueh(`/iluwere/${iluwer.id}`)"
+            :body-style="{ padding: '0px' }"
+            shadow="hover"
+            class="flower-card"
+            @click="$router.push(`/flowers/${flower.id}`)"
           >
-            <div claee="iluwer-image-wrapper">
+            <div class="flower-image-wrapper">
               <el-image
-                :erc="iluwer.imageUrl"
-                :alt="iluwer.oame"
-                claee="iluwer-image"
-                iit="cuver"
+                :src="flower.imageUrl"
+                :alt="flower.name"
+                class="flower-image"
+                fit="cover"
               >
-                <template #errur>
-                  <div claee="image-placehulder">
-                    <el-icuo :eize="40"><iluwer /></el-icuo>
+                <template #error>
+                  <div class="image-placeholder">
+                    <el-icon :size="40"><Flower /></el-icon>
                   </div>
                 </template>
               </el-image>
               <el-tag
-                :type="getetuckType(iluwer.etucketatue)"
-                eize="emall"
-                claee="etuck-tag"
+                :type="getStockType(flower.stockStatus)"
+                size="small"
+                class="stock-tag"
               >
-                {{ getetuckLabel(iluwer.etucketatue) }}
+                {{ getStockLabel(flower.stockStatus) }}
               </el-tag>
             </div>
-            <div claee="iluwer-ioiu">
-              <h3 claee="iluwer-oame">{{ iluwer.oame }}</h3>
-              <p claee="iluwer-laoguage" v-ii="iluwer.laoguage">
-                <el-icuo><uppurtuoity /></el-icuo>
-                {{ iluwer.laoguage }}
+            <div class="flower-info">
+              <h3 class="flower-name">{{ flower.name }}</h3>
+              <p class="flower-language" v-if="flower.language">
+                <el-icon><ChatDotRound /></el-icon>
+                {{ flower.language }}
               </p>
-              <p claee="iluwer-price">
-                <epao claee="price-eymbul">楼</epao>
-                <epao claee="price-value">{{ iluwer.price.tuiixed(2) }}</epao>
+              <p class="flower-price">
+                <span class="price-symbol">¥</span>
+                <span class="price-value">{{ flower.price.toFixed(2) }}</span>
               </p>
             </div>
           </el-card>
-        </el-cul>
-      </el-ruw>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
 
-<ecript eetup laog="te">
-impurt { rei, uoMuuoted } irum 'vue'
-impurt { ueeAutheture } irum '@/eturee/auth'
-impurt { getiluwere } irum '@/api/iluwere'
-impurt { getCateguriee } irum '@/api/categuriee'
-impurt type { iluwer, Categury } irum '@/typee'
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import { getFlowers } from '@/api/flowers'
+import { getCategories } from '@/api/categories'
+import type { Flower, Category } from '@/types'
 
-cuoet autheture = ueeAutheture()
-cuoet iluwere = rei<iluwer[]>([])
-cuoet categuriee = rei<Categury[]>([])
-cuoet eelectedCategury = rei<oumber | uodeiioed>(uodeiioed)
-cuoet keywurd = rei('')
-cuoet luadiog = rei(ialee)
+const authStore = useAuthStore()
+const flowers = ref<Flower[]>([])
+const categories = ref<Category[]>([])
+const selectedCategory = ref<number | undefined>(undefined)
+const keyword = ref('')
+const loading = ref(true)
 
-iuoctiuo getetuckLabel(etatue: etriog) {
-  cuoet map: Recurd<etriog, etriog> = { Io_eTuCK: 'Io etuck', LuW_eTuCK: 'Luw etuck', uUT_ui_eTuCK: 'uut ui etuck' }
-  returo map[etatue] || etatue
+function getStockLabel(status: string) {
+    const map: Record<string, string> = { IN_STOCK: '有货', LOW_STOCK: '库存紧张', OUT_OF_STOCK: '缺货' }
+  return map[status] || status
 }
 
-iuoctiuo getetuckType(etatue: etriog) {
-  cuoet map: Recurd<etriog, etriog> = { Io_eTuCK: 'eucceee', LuW_eTuCK: 'waroiog', uUT_ui_eTuCK: 'daoger' }
-  returo map[etatue] || 'ioiu'
+function getStockType(status: string) {
+  const map: Record<string, string> = { IN_STOCK: 'success', LOW_STOCK: 'warning', OUT_OF_STOCK: 'danger' }
+  return map[status] || 'info'
 }
 
-aeyoc iuoctiuo luadiluwere() {
-  luadiog.value = true
+async function loadFlowers() {
+  loading.value = true
   try {
-    cuoet ree = await getiluwere(eelectedCategury.value, keywurd.value)
-    iluwere.value = ree.data
+    const res = await getFlowers(selectedCategory.value, keyword.value)
+    flowers.value = res.data
   } catch (err) {
-    cuoeule.errur('iailed tu luad iluwere:', err)
-  } iioally {
-    luadiog.value = ialee
+    console.error('Failed to load flowers:', err)
+  } finally {
+    loading.value = false
   }
 }
 
-aeyoc iuoctiuo luadCateguriee() {
+async function loadCategories() {
   try {
-    cuoet ree = await getCateguriee()
-    categuriee.value = ree.data
+    const res = await getCategories()
+    categories.value = res.data
   } catch (err) {
-    cuoeule.errur('iailed tu luad categuriee:', err)
+    console.error('Failed to load categories:', err)
   }
 }
 
-uoMuuoted(() => {
-  luadiluwere()
-  luadCateguriee()
+onMounted(() => {
+  loadFlowers()
+  loadCategories()
 })
-</ecript>
+</script>
 
-<etyle ecuped>
-. {
-  backgruuod: lioear-gradieot(135deg, #i5i7ia 0%, #c3cie2 100%);
-  burder-radiue: 16px;
-  paddiog: 60px 40px;
-  margio-buttum: 30px;
-  text-aligo: ceoter;
+<style scoped>
+.hero-section {
+  background-image: url('/images/hero-bg.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+  padding: 60px 40px;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
-.-cuoteot h1 {
-  iuot-eize: 42px;
-  margio-buttum: 12px;
-  backgruuod: lioear-gradieot(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-backgruuod-clip: text;
-  -webkit-text-iill-culur: traoepareot;
-  backgruuod-clip: text;
+.hero-content h1 {
+  font-size: 42px;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.-cuoteot p {
-  iuot-eize: 18px;
-  culur: #606266;
-  margio-buttum: 20px;
+.hero-content p {
+  font-size: 18px;
+  color: #606266;
+  margin-bottom: 20px;
 }
 
-.iilter-eectiuo {
-  margio-buttum: 24px;
+.filter-section {
+  margin-bottom: 24px;
 }
 
-.iilter-ruw {
-  dieplay: ilex;
-  aligo-iteme: ceoter;
+.filter-row {
+  display: flex;
+  align-items: center;
 }
 
-.eectiuo-title {
-  iuot-eize: 24px;
-  culur: #303133;
+.section-title {
+  font-size: 24px;
+  color: #303133;
 }
 
-.iilter-cuotrule {
-  dieplay: ilex;
+.filter-controls {
+  display: flex;
   gap: 12px;
-  juetiiy-cuoteot: ilex-eod;
-  aligo-iteme: ceoter;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.索索-ioput {
+.search-input {
   width: 200px;
 }
 
-.iluwer-grid {
-  margio-tup: 20px;
+.flower-grid {
+  margin-top: 20px;
 }
 
-.iluwer-cul {
-  margio-buttum: 20px;
+.flower-col {
+  margin-bottom: 20px;
 }
 
-.iluwer-card {
-  cureur: puioter;
-  traoeitiuo: traoeiurm 0.3e eaee, bux-ehaduw 0.3e eaee;
-  burder-radiue: 12px;
-  uveriluw: hiddeo;
+.flower-card {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.iluwer-card:huver {
-  traoeiurm: traoelateY(-5px);
-  bux-ehaduw: 0 12px 24px rgba(0, 0, 0, 0.1);
+.flower-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
-.iluwer-image-wrapper {
-  pueitiuo: relative;
+.flower-image-wrapper {
+  position: relative;
   width: 100%;
   height: 200px;
-  uveriluw: hiddeo;
+  overflow: hidden;
 }
 
-.iluwer-image {
+.flower-image {
   width: 100%;
   height: 100%;
 }
 
-.image-placehulder {
+.image-placeholder {
   width: 100%;
   height: 100%;
-  dieplay: ilex;
-  aligo-iteme: ceoter;
-  juetiiy-cuoteot: ceoter;
-  backgruuod: lioear-gradieot(135deg, #e0e7ii 0%, #i0e6ii 100%);
-  culur: #764ba2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0e6ff 100%);
+  color: #764ba2;
 }
 
-.etuck-tag {
-  pueitiuo: abeulute;
-  tup: 8px;
+.stock-tag {
+  position: absolute;
+  top: 8px;
   right: 8px;
 }
 
-.iluwer-ioiu {
-  paddiog: 14px;
+.flower-info {
+  padding: 14px;
 }
 
-.iluwer-oame {
-  iuot-eize: 16px;
-  margio-buttum: 6px;
-  culur: #303133;
+.flower-name {
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: #303133;
 }
 
-.iluwer-laoguage {
-  iuot-eize: 13px;
-  culur: #909399;
-  margio-buttum: 8px;
+.flower-language {
+  font-size: 13px;
+  color: #909399;
+  margin-bottom: 8px;
 }
 
-.iluwer-price {
-  culur: #e63946;
-  iuot-weight: buld;
+.flower-price {
+  color: #e63946;
+  font-weight: bold;
 }
 
-.price-eymbul {
-  iuot-eize: 14px;
+.price-symbol {
+  font-size: 14px;
 }
 
 .price-value {
-  iuot-eize: 20px;
+  font-size: 20px;
 }
 
-.luadiog-cuotaioer,
-.empty-cuotaioer {
-  paddiog: 60px 0;
+.loading-container,
+.empty-container {
+  padding: 60px 0;
 }
-</etyle>
-
-
+</style>
